@@ -1,87 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Srujan S — AI Engineer, Developer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="user.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Srujan S — AI Engineer, Developer & Creator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-primary: #0a0a0a; --bg-secondary: #111111;
             --text-primary: #ffffff; --text-secondary: #a0a0a0;
             --accent-aiml: #00ff88; --accent-fullstack: #0088ff;
-            --accent-backend: #ff0088; --accent-video: #ffaa00;
+            --accent-backend: #ff0088;
             --current-accent: var(--accent-aiml);
         }
         body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; line-height: 1.6; cursor: none; }
-        .custom-cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9999; transition: all 0.15s ease; mix-blend-mode: difference; }
-        .cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9999; transition: all 0.1s ease; }
-        .cursor-trail { position: fixed; width: 8px; height: 8px; background: var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9998; opacity: 0; animation: trailFade 0.8s ease-out forwards; }
-        @keyframes trailFade { 0% { opacity: 0.8; transform: scale(1); } 100% { opacity: 0; transform: scale(0.3); } }
-        .ripple { position: fixed; border: 2px solid var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9997; animation: rippleExpand 0.6s ease-out forwards; }
-        @keyframes rippleExpand { 0% { width: 0; height: 0; opacity: 1; } 100% { width: 100px; height: 100px; opacity: 0; } }
-        .bg-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; z-index: 0; opacity: 0.3; }
-        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); opacity: 0.05; z-index: 0; pointer-events: none; }
-        .cursor-orb { position: fixed; width: 40px; height: 40px; border-radius: 50%; pointer-events: none; z-index: 1; opacity: 0.15; filter: blur(20px); transition: background 0.3s ease; }
-        .orb-1 { background: var(--current-accent); width: 60px; height: 60px; }
-        .orb-2 { background: var(--current-accent); width: 40px; height: 40px; }
-        .orb-3 { background: var(--current-accent); width: 30px; height: 30px; }
+
+        /* ── Cursor ── */
+        .custom-cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform .15s ease, border-width .15s ease; mix-blend-mode: difference; }
+        .cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9999; }
+        .cursor-trail { position: fixed; width: 8px; height: 8px; background: var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9998; opacity: 0; animation: trailFade .8s ease-out forwards; }
+        @keyframes trailFade { 0%{opacity:.8;transform:scale(1)} 100%{opacity:0;transform:scale(.3)} }
+        .ripple { position: fixed; border: 2px solid var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9997; animation: rippleExpand .6s ease-out forwards; }
+        @keyframes rippleExpand { 0%{width:0;height:0;opacity:1} 100%{width:100px;height:100px;opacity:0} }
+        .cursor-orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 1; opacity: .15; filter: blur(20px); background: var(--current-accent); transition: background .3s; }
+        .orb-1{width:60px;height:60px} .orb-2{width:40px;height:40px} .orb-3{width:30px;height:30px}
+
+        /* ── BG ── */
+        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size: 50px 50px; z-index: 0; opacity: .3; pointer-events: none; }
+        .noise { position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: .05; z-index: 0; pointer-events: none; }
+
+        /* ── Layout ── */
         .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+        /* ── Hero ── */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 4rem 0; }
-        .hero-name { font-family: 'Archivo Black', sans-serif; font-size: clamp(3rem, 12vw, 8rem); line-height: 0.9; margin-bottom: 1rem; letter-spacing: -0.03em; background: linear-gradient(135deg, var(--text-primary) 0%, var(--current-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: fadeInUp 0.8s ease-out; }
-        .hero-tagline { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--text-secondary); margin-bottom: 3rem; font-weight: 400; animation: fadeInUp 0.8s ease-out 0.2s both; }
-        .role-switcher { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; animation: fadeInUp 0.8s ease-out 0.4s both; }
-        .role-btn { background: var(--bg-secondary); border: 2px solid rgba(255,255,255,0.1); color: var(--text-primary); padding: 1rem 2rem; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; font-family: 'DM Sans', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
-        .role-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--current-accent); transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 0; }
-        .role-btn:hover::before, .role-btn.active::before { left: 0; }
-        .role-btn span { position: relative; z-index: 1; }
-        .role-btn:hover, .role-btn.active { border-color: var(--current-accent); color: var(--bg-primary); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .role-content { display: none; animation: fadeIn 0.5s ease-out; }
-        .role-content.active { display: block; }
-        .section-title { font-family: 'Archivo Black', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 2rem; color: var(--current-accent); letter-spacing: -0.02em; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
-        .skill-card { background: var(--bg-secondary); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
-        .skill-card:hover { border-color: var(--current-accent); transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-        .skill-card h3 { color: var(--current-accent); margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 700; }
-        .skill-card p { color: var(--text-secondary); font-size: 0.95rem; }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
-        .project-card { background: var(--bg-secondary); border: 1px solid rgba(255,255,255,0.1); overflow: hidden; transition: all 0.3s ease; position: relative; }
-        .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--current-accent); transform: scaleX(0); transition: transform 0.3s ease; }
-        .project-card:hover::before { transform: scaleX(1); }
-        .project-card:hover { border-color: var(--current-accent); transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.4); }
-        .project-card::after, .skill-card::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: radial-gradient(circle, var(--current-accent) 0%, transparent 70%); opacity: 0; transform: translate(-50%, -50%); transition: all 0.4s ease; pointer-events: none; }
-        .project-card:hover::after, .skill-card:hover::after { width: 300px; height: 300px; opacity: 0.1; }
-        .project-header { padding: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .project-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 700; }
-        .project-tech { color: var(--current-accent); font-size: 0.85rem; font-weight: 500; margin-bottom: 1rem; }
-        .project-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
-        .project-footer { padding: 1.5rem 2rem; display: flex; gap: 1rem; }
-        .project-link { padding: 0.6rem 1.2rem; background: transparent; border: 1px solid var(--current-accent); color: var(--current-accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; display: inline-block; }
-        .project-link:hover { background: var(--current-accent); color: var(--bg-primary); }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 4rem 0; }
-        .stat-card { text-align: center; padding: 2rem; background: var(--bg-secondary); border: 1px solid rgba(255,255,255,0.1); }
-        .stat-number { font-family: 'Archivo Black', sans-serif; font-size: 3rem; color: var(--current-accent); display: block; margin-bottom: 0.5rem; }
-        .stat-label { color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        .contact-section { margin: 6rem 0; text-align: center; }
-        .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; }
-        .contact-link { color: var(--text-primary); text-decoration: none; font-size: 1.1rem; padding: 1rem 2rem; border: 2px solid var(--current-accent); transition: all 0.3s ease; font-weight: 600; }
-        .contact-link:hover { background: var(--current-accent); color: var(--bg-primary); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .resume-link { position: relative; overflow: hidden; }
-        .resume-link::after { content: ''; position: absolute; inset: 0; background: var(--current-accent); opacity: 0.08; animation: resumePulse 2s ease-in-out infinite; }
-        @keyframes resumePulse { 0%, 100% { opacity: 0.08; } 50% { opacity: 0.18; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @media (max-width: 768px) {
-            .container { padding: 0 1.5rem; }
-            .projects-grid, .skills-grid { grid-template-columns: 1fr; }
-            .role-switcher { flex-direction: column; }
-            .role-btn { width: 100%; }
+        .hero-name { font-family: 'Archivo Black', sans-serif; font-size: clamp(3rem,12vw,8rem); line-height: .9; margin-bottom: 1rem; letter-spacing: -.03em; background: linear-gradient(135deg,var(--text-primary) 0%,var(--current-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: fadeInUp .8s ease-out; }
+        .hero-tagline { font-size: clamp(1.2rem,3vw,2rem); color: var(--text-secondary); margin-bottom: 2rem; font-weight: 400; animation: fadeInUp .8s ease-out .2s both; }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 3rem; animation: fadeInUp .8s ease-out .3s both; }
+        .hero-badge { background: var(--bg-secondary); border: 1px solid rgba(255,255,255,.1); color: var(--text-secondary); padding: .35rem .9rem; font-size: .85rem; font-weight: 500; }
+        .hero-badge span { color: var(--current-accent); }
+
+        /* ── Role Switcher ── */
+        .role-switcher { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; animation: fadeInUp .8s ease-out .4s both; }
+        .role-btn { background: var(--bg-secondary); border: 2px solid rgba(255,255,255,.1); color: var(--text-primary); padding: 1rem 2rem; font-size: 1rem; font-weight: 600; cursor: pointer; position: relative; overflow: hidden; font-family: 'DM Sans',sans-serif; text-transform: uppercase; letter-spacing: .05em; transition: border-color .3s,color .3s,transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s; }
+        .role-btn::before { content:''; position:absolute; inset:0; background:var(--current-accent); transform:translateX(-100%); transition:transform .3s cubic-bezier(.4,0,.2,1); z-index:0; }
+        .role-btn:hover::before,.role-btn.active::before { transform:translateX(0); }
+        .role-btn span { position:relative; z-index:1; }
+        .role-btn:hover,.role-btn.active { border-color:var(--current-accent); color:var(--bg-primary); transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.3); }
+
+        /* ── Role Panels ── */
+        .role-content { display:none; animation:fadeIn .5s ease-out; }
+        .role-content.active { display:block; }
+        .section-title { font-family:'Archivo Black',sans-serif; font-size:clamp(2rem,5vw,3.5rem); margin-bottom:2rem; color:var(--current-accent); letter-spacing:-.02em; }
+
+        /* ── Experience Section ── */
+        .experience-section { margin-bottom: 4rem; }
+        .exp-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+        .exp-card { background: var(--bg-secondary); border: 1px solid rgba(255,255,255,.1); padding: 2rem; position: relative; overflow: hidden; transition: border-color .3s,transform .3s,box-shadow .3s; }
+        .exp-card::before { content:''; position:absolute; left:0; top:0; width:4px; height:100%; background:var(--current-accent); }
+        .exp-card:hover { border-color:var(--current-accent); transform:translateX(4px); box-shadow:0 10px 40px rgba(0,0,0,.3); }
+        .exp-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
+        .exp-role { font-size:1.2rem; font-weight:700; color:var(--text-primary); }
+        .exp-company { color:var(--current-accent); font-weight:600; font-size:.95rem; margin-top:.2rem; }
+        .exp-date { color:var(--text-secondary); font-size:.85rem; white-space:nowrap; background:rgba(255,255,255,.05); padding:.25rem .75rem; }
+        .exp-card ul { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+        .exp-card ul li { color:var(--text-secondary); font-size:.92rem; padding-left:1.2rem; position:relative; }
+        .exp-card ul li::before { content:'→'; position:absolute; left:0; color:var(--current-accent); font-size:.8rem; top:.1rem; }
+
+        /* ── Stats ── */
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:2rem; margin:4rem 0; }
+        .stat-card { text-align:center; padding:2rem; background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); }
+        .stat-number { font-family:'Archivo Black',sans-serif; font-size:3rem; color:var(--current-accent); display:block; margin-bottom:.5rem; }
+        .stat-label { color:var(--text-secondary); font-size:.85rem; text-transform:uppercase; letter-spacing:.1em; }
+
+        /* ── Skills ── */
+        .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; margin-bottom:4rem; }
+        .skill-card { background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); padding:1.5rem; position:relative; overflow:hidden; transition:border-color .3s,transform .3s,box-shadow .3s; }
+        .skill-card:hover { border-color:var(--current-accent); transform:translateY(-5px); box-shadow:0 10px 40px rgba(0,0,0,.3); }
+        .skill-card::after,.project-card::after { content:''; position:absolute; top:50%;left:50%; width:0;height:0; border-radius:50%; background:radial-gradient(circle,var(--current-accent) 0%,transparent 70%); opacity:0; transform:translate(-50%,-50%); transition:width .4s,height .4s,opacity .4s; pointer-events:none; }
+        .skill-card:hover::after,.project-card:hover::after { width:300px;height:300px;opacity:.1; }
+        .skill-card h3 { color:var(--current-accent); margin-bottom:.5rem; font-size:1.1rem; font-weight:700; }
+        .skill-card p { color:var(--text-secondary); font-size:.9rem; }
+
+        /* ── Projects ── */
+        .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:2rem; margin-bottom:4rem; }
+        .project-card { background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); overflow:hidden; position:relative; transition:border-color .3s,transform .3s,box-shadow .3s; }
+        .project-card::before { content:''; position:absolute; top:0;left:0; width:100%;height:4px; background:var(--current-accent); transform:scaleX(0); transform-origin:left; transition:transform .3s; z-index:1; }
+        .project-card:hover::before { transform:scaleX(1); }
+        .project-card:hover { border-color:var(--current-accent); transform:translateY(-5px); box-shadow:0 15px 50px rgba(0,0,0,.4); }
+        .project-header { padding:2rem; border-bottom:1px solid rgba(255,255,255,.05); }
+        .project-card h3 { font-size:1.4rem; margin-bottom:.4rem; color:var(--text-primary); font-weight:700; }
+        .project-tech { color:var(--current-accent); font-size:.82rem; font-weight:500; margin-bottom:.8rem; }
+        .project-card p { color:var(--text-secondary); font-size:.92rem; line-height:1.6; }
+        .project-footer { padding:1.25rem 2rem; display:flex; gap:1rem; flex-wrap:wrap; }
+        .project-link { padding:.55rem 1.1rem; background:transparent; border:1px solid var(--current-accent); color:var(--current-accent); text-decoration:none; font-size:.88rem; font-weight:600; transition:background .3s,color .3s; display:inline-block; }
+        .project-link:hover { background:var(--current-accent); color:var(--bg-primary); }
+
+        /* ── Hackathons ── */
+        .hackathon-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-bottom:4rem; }
+        .hackathon-card { background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); padding:1.5rem; position:relative; overflow:hidden; transition:border-color .3s,transform .3s; }
+        .hackathon-card:hover { border-color:var(--current-accent); transform:translateY(-4px); }
+        .hackathon-card .badge { display:inline-block; background:var(--current-accent); color:var(--bg-primary); font-size:.75rem; font-weight:700; padding:.2rem .6rem; margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.05em; }
+        .hackathon-card h3 { color:var(--text-primary); font-size:1.05rem; font-weight:700; margin-bottom:.3rem; }
+        .hackathon-card .org { color:var(--current-accent); font-size:.85rem; margin-bottom:.5rem; }
+        .hackathon-card p { color:var(--text-secondary); font-size:.88rem; }
+
+        /* ── Contact ── */
+        .contact-section { margin:6rem 0; text-align:center; }
+        .contact-links { display:flex; justify-content:center; flex-wrap:wrap; gap:1.5rem; margin-top:2rem; }
+        .contact-link { color:var(--text-primary); text-decoration:none; font-size:1rem; padding:.9rem 1.8rem; border:2px solid var(--current-accent); font-weight:600; transition:background .3s,color .3s,transform .3s,box-shadow .3s; }
+        .contact-link:hover { background:var(--current-accent); color:var(--bg-primary); transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.3); }
+        .resume-link { position:relative; overflow:hidden; }
+        .resume-link::after { content:''; position:absolute; inset:0; background:var(--current-accent); opacity:.08; animation:pulse 2s ease-in-out infinite; pointer-events:none; }
+        @keyframes pulse { 0%,100%{opacity:.08} 50%{opacity:.18} }
+
+        /* ── Footer ── */
+        footer { padding:3rem 0; text-align:center; border-top:1px solid rgba(255,255,255,.1); margin-top:6rem; color:var(--text-secondary); }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+
+        /* ── Responsive ── */
+        @media(max-width:768px) {
+            .container{padding:0 1.5rem;}
+            .projects-grid,.skills-grid,.hackathon-grid{grid-template-columns:1fr;}
+            .role-switcher{flex-direction:column;}
+            .role-btn{width:100%;}
+            .exp-header{flex-direction:column;}
         }
-        footer { padding: 3rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 6rem; color: var(--text-secondary); }
     </style>
 </head>
 <body>
@@ -94,9 +144,17 @@
     <div class="noise"></div>
 
     <div class="container">
+
+        <!-- ══ HERO ══════════════════════════════════════ -->
         <section class="hero">
             <h1 class="hero-name">SRUJAN S</h1>
             <p class="hero-tagline">Building intelligent systems. Crafting seamless experiences. Shipping at scale.</p>
+            <div class="hero-meta">
+                <div class="hero-badge">📍 Bengaluru, India</div>
+                <div class="hero-badge">🎓 B.E. CS — GAT &nbsp;<span>GPA 8.5</span></div>
+                <div class="hero-badge">💼 AI Research Intern — <span>SISA Information Security</span></div>
+                <div class="hero-badge">🛡️ Software Intern — <span>DRDO CASDIC</span></div>
+            </div>
             <div class="role-switcher">
                 <button class="role-btn active" data-role="aiml"><span>🤖 AI/ML Engineer</span></button>
                 <button class="role-btn" data-role="fullstack"><span>🚀 Full-Stack Developer</span></button>
@@ -104,109 +162,364 @@
             </div>
         </section>
 
-        <!-- AI/ML Content -->
+        <!-- ══ AI / ML ════════════════════════════════════ -->
         <div class="role-content active" data-content="aiml">
             <h2 class="section-title">AI & Machine Learning</h2>
+
+            <!-- Experience -->
+            <div class="experience-section">
+                <div class="exp-grid">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <div class="exp-role">AI Research Intern</div>
+                                <div class="exp-company">SISA Information Security Pvt. Ltd. · Bengaluru</div>
+                            </div>
+                            <div class="exp-date">Apr 2026 – Present</div>
+                        </div>
+                        <ul>
+                            <li>Spearheaded AIBOM &amp; SBOM generation on SISA PRISM Discovery — a production AI asset scanning platform — enabling end-to-end visibility into AI model supply chains for enterprise clients.</li>
+                            <li>Engineered multi-stage scan pipelines via FastAPI integrating OSV vulnerability scanning, deps.dev/registry enrichment, and CycloneDX/SPDX-compliant SBOM generation, cutting manual audit effort by 60%.</li>
+                            <li>Automated dependency enrichment workflows consuming public registries and OSV advisory feeds, surfacing CVEs and EPSS-scored vulnerabilities with actionable remediation metadata.</li>
+                        </ul>
+                    </div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <div class="exp-role">Machine Learning Intern</div>
+                                <div class="exp-company">Evtaar Technologies · Bengaluru</div>
+                            </div>
+                            <div class="exp-date">Aug 2025 – Nov 2025</div>
+                        </div>
+                        <ul>
+                            <li>Implemented RAG with optimized prompt pipelines and document indexing, increasing AI chatbot response accuracy by 30%.</li>
+                            <li>Optimized LLM request handling and API orchestration, reducing average response latency by 25%.</li>
+                            <li>Integrated external medical/knowledge APIs, reducing manual support dependency by 40%.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
             <div class="stats-grid">
                 <div class="stat-card"><span class="stat-number">30%</span><span class="stat-label">Accuracy Improvement</span></div>
-                <div class="stat-card"><span class="stat-number">40%</span><span class="stat-label">Support Load Reduction</span></div>
+                <div class="stat-card"><span class="stat-number">60%</span><span class="stat-label">Audit Effort Reduction</span></div>
                 <div class="stat-card"><span class="stat-number">94.3%</span><span class="stat-label">Diagnostic Accuracy</span></div>
-                <div class="stat-card"><span class="stat-number">50K+</span><span class="stat-label">Images Processed</span></div>
+                <div class="stat-card"><span class="stat-number">95%</span><span class="stat-label">Vuln Detection Accuracy</span></div>
             </div>
+
+            <!-- Skills -->
             <div class="skills-grid">
                 <div class="skill-card"><h3>RAG Systems</h3><p>Retrieval Augmented Generation with optimized prompt pipelines for production chatbots</p></div>
-                <div class="skill-card"><h3>LLM Integration</h3><p>GPT-based models, API orchestration, and real-time conversation systems</p></div>
+                <div class="skill-card"><h3>LLM Integration</h3><p>Groq, GPT-based models, LangChain, API orchestration, and real-time conversation systems</p></div>
                 <div class="skill-card"><h3>Computer Vision</h3><p>ResNet-50 CNN architectures for image classification and diagnostic systems</p></div>
-                <div class="skill-card"><h3>NLP & Voice AI</h3><p>Text-to-Speech (TTS), Speech-to-Text (STT), and multilingual language processing</p></div>
+                <div class="skill-card"><h3>AI Security (AIBOM)</h3><p>AI/SBOM generation, OSV vulnerability scanning, CycloneDX/SPDX compliance, supply-chain security</p></div>
+                <div class="skill-card"><h3>NLP & Voice AI</h3><p>Text-to-Speech (Kokoro TTS), Speech-to-Text, multilingual language processing</p></div>
+                <div class="skill-card"><h3>Frameworks</h3><p>PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, LangChain, Prompt Engineering</p></div>
             </div>
+
+            <!-- Projects -->
             <div class="projects-grid">
                 <div class="project-card">
-                    <div class="project-header"><h3>Skintel AI</h3><div class="project-tech">ResNet-50 • GPT • React • Django • AWS</div><p>End-to-end AI dermatology platform combining CNN and LLM for skin type classification. Achieved 94.3% diagnostic accuracy serving 1,000+ active users with 99.5% uptime.</p></div>
-                    <div class="project-footer"><a href="https://huggingface.co/spaces/srujansri1/skintel-ai" class="project-link" target="_blank">Live Demo →</a><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>AdCraft AI</h3>
+                        <div class="project-tech">Groq Llama 3.3 70B · Kokoro TTS · Playwright · FFmpeg · FastAPI</div>
+                        <p>AI-powered video ad generator that transforms any business URL into a broadcast-ready video in under 30 seconds. Groq LLM generates ad scripts with headlines, CTAs and scene descriptions; Kokoro TTS synthesizes voiceover mixed with background music via FFmpeg. Zero paid video APIs.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://adcraft-ai-xbog.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-header"><h3>DNA Cryptography with LLM</h3><div class="project-tech">GPT • Python • Bioinformatics • Encryption</div><p>Production-grade cryptographic system integrating DNA sequence encoding with GPT-based encryption. Achieved 256-bit security and 40% faster key generation vs. RSA.</p></div>
-                    <div class="project-footer"><a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>MORPHEUS — AI Security Scanner</h3>
+                        <div class="project-tech">Python · FastAPI · LangChain · Docker · Groq API · React</div>
+                        <p>Open-source AI agent supply-chain vulnerability scanner with 95% detection accuracy. Automated adversarial testing in Docker sandboxes with LLM-generated remediation reports in sub-30-second scans. Detected code injection, SSRF, and prompt injection. Led 5-person team.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-header"><h3>RAG Chatbot (Evtaar)</h3><div class="project-tech">RAG • Python • REST APIs • Prompt Engineering</div><p>Production AI chatbot system with optimized document indexing. Reduced response latency by 25% and manual support dependency by 40%.</p></div>
-                    <div class="project-footer"><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>Skintel AI</h3>
+                        <div class="project-tech">ResNet-50 · GPT · React · Django · Docker · AWS</div>
+                        <p>End-to-end AI dermatology platform combining CNN and LLM for skin type classification. Achieved 94.3% diagnostic accuracy across 12 skin conditions, processing 50K+ images for 1,000+ users at 99.5% uptime.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://huggingface.co/spaces/srujansri1/skintel-ai" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>RAG Chatbot (Evtaar)</h3>
+                        <div class="project-tech">RAG · Python · REST APIs · Prompt Engineering</div>
+                        <p>Production AI chatbot with optimized document indexing. Reduced response latency by 25% and manual support dependency by 40%. Real-time LLM backend integrated with React frontend.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>DNA Cryptography with LLM</h3>
+                        <div class="project-tech">GPT · Python · Bioinformatics · Encryption</div>
+                        <p>Production cryptographic system integrating DNA sequence encoding with GPT-based encryption. Achieved 256-bit security, 40% faster key generation vs. RSA, and 85% reduction in brute-force susceptibility.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hackathons -->
+            <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.5rem)">Hackathons</h2>
+            <div class="hackathon-grid">
+                <div class="hackathon-card">
+                    <div class="badge">🥇 1st Place</div>
+                    <h3>Code Breaker's Challenge (CBC)</h3>
+                    <div class="org">Global Academy of Technology · 2025</div>
+                    <p>Built a HuggingFace RAG medical chatbot; judges' top pick.</p>
+                </div>
+                <div class="hackathon-card">
+                    <div class="badge">Top Tier</div>
+                    <h3>Colossus 2.0 Hackathon</h3>
+                    <div class="org">Dr. AIT Technical Club · 2024</div>
+                    <p>Top-tier finish among 40+ teams; directed full architecture in a 24-hr build as team lead.</p>
+                </div>
+                <div class="hackathon-card">
+                    <div class="badge">Team Member</div>
+                    <h3>Sandbox Hackathon</h3>
+                    <div class="org">Dayananda Sagar College · 2026</div>
+                    <p>Collaborated on rapid AI prototyping under competition constraints.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Full-Stack Content -->
+        <!-- ══ FULL-STACK ══════════════════════════════════ -->
         <div class="role-content" data-content="fullstack">
             <h2 class="section-title">Full-Stack Development</h2>
+
+            <!-- Experience -->
+            <div class="experience-section">
+                <div class="exp-grid">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <div class="exp-role">Software Intern</div>
+                                <div class="exp-company">DRDO CASDIC · Bengaluru</div>
+                            </div>
+                            <div class="exp-date">Jan 2026 – Present</div>
+                        </div>
+                        <ul>
+                            <li>Built radar visualization tool using HTML5 Canvas API with requestAnimationFrame(), achieving 60 FPS with polar-to-Cartesian coordinate transformations and gradient-based sweep animations.</li>
+                            <li>Engineered JavaScript data structure for threat configs enabling O(1) modifications with event-driven updates and automatic re-rendering via data-attribute binding.</li>
+                            <li>Developed modular panel system handling 16+ collapsible panels using trigonometric calculations aligned with aviation's ±180° standards.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
             <div class="stats-grid">
-                <div class="stat-card"><span class="stat-number">2.5s</span><span class="stat-label">Average Response Time</span></div>
+                <div class="stat-card"><span class="stat-number">60 FPS</span><span class="stat-label">Radar Rendering</span></div>
                 <div class="stat-card"><span class="stat-number">1000+</span><span class="stat-label">Active Users</span></div>
                 <div class="stat-card"><span class="stat-number">99.8%</span><span class="stat-label">Uptime</span></div>
                 <div class="stat-card"><span class="stat-number">500+</span><span class="stat-label">Concurrent Requests</span></div>
             </div>
+
+            <!-- Skills -->
             <div class="skills-grid">
                 <div class="skill-card"><h3>React.js</h3><p>Modern frontend with hooks, state management, and real-time UI updates</p></div>
+                <div class="skill-card"><h3>Next.js</h3><p>Full-stack React framework with SSR, API routes, and Vercel deployment</p></div>
                 <div class="skill-card"><h3>Django & FastAPI</h3><p>RESTful APIs, WebSocket connections, and scalable backend architecture</p></div>
                 <div class="skill-card"><h3>Docker & CI/CD</h3><p>Containerization, deployment pipelines, and production orchestration</p></div>
-                <div class="skill-card"><h3>Cloud Services</h3><p>AWS (S3, Elastic Beanstalk), GCP, Vercel, Render, PostgreSQL, and distributed systems</p></div>
+                <div class="skill-card"><h3>Cloud Services</h3><p>AWS (S3, Elastic Beanstalk), GCP, Oracle Cloud Infrastructure, Vercel</p></div>
+                <div class="skill-card"><h3>HTML5 Canvas</h3><p>60 FPS real-time graphics, coordinate transforms, animation loops</p></div>
             </div>
+
+            <!-- Projects -->
             <div class="projects-grid">
                 <div class="project-card">
-                    <div class="project-header"><h3>DNA Cryptography</h3><div class="project-tech">React • FastAPI • Docker • WebSocket • Vercel</div><p>Full-stack cryptographic system with GPT-based encryption. Handles 500+ concurrent requests at 99.8% uptime with sub-second processing. Deployed on Vercel.</p></div>
-                    <div class="project-footer"><a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>AdCraft AI</h3>
+                        <div class="project-tech">Next.js · FastAPI · Playwright · Oracle Cloud · Vercel</div>
+                        <p>Full-stack AI product with a Next.js frontend and async FastAPI backend on Oracle Cloud Infrastructure. Scrapes any URL with intelligent HTTP→browser fallback, composes video from live screenshots, and streams results to the client in real time.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://adcraft-ai-xbog.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-header"><h3>Skintel AI Platform</h3><div class="project-tech">React • Django REST • PostgreSQL • AWS • HuggingFace</div><p>Real-time image processing pipeline with custom authentication, file uploads, and AI inference. Deployed on HuggingFace Spaces with AWS S3 storage.</p></div>
-                    <div class="project-footer"><a href="https://huggingface.co/spaces/srujansri1/skintel-ai" class="project-link" target="_blank">Live Demo →</a><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>EW Threat Visualization</h3>
+                        <div class="project-tech">HTML5 Canvas · JavaScript · Real-time Graphics · Vercel</div>
+                        <p>High-performance radar display at 60 FPS with polar-to-Cartesian transformations. Built for DRDO CASDIC with 16+ collapsible panels and O(1) threat config modifications. Deployed on Vercel.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://ew-threat-visualization.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-header"><h3>EW Threat Visualization</h3><div class="project-tech">HTML5 Canvas • JavaScript • Real-time Graphics • Vercel</div><p>High-performance radar display achieving 60 FPS with polar-to-Cartesian transformations. Built for DRDO CASDIC with modular architecture. Deployed on Vercel.</p></div>
-                    <div class="project-footer"><a href="https://ew-threat-visualization.vercel.app/" class="project-link" target="_blank">Live Demo →</a><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>MORPHEUS — AI Security Scanner</h3>
+                        <div class="project-tech">React · FastAPI · Python · Docker · LangChain</div>
+                        <p>Full-stack security platform with React frontend and Python/FastAPI backend. Parallel processing with 90% cache hit rate. Led 5-person team building the full architecture.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Skintel AI Platform</h3>
+                        <div class="project-tech">React · Django REST · PostgreSQL · AWS · HuggingFace</div>
+                        <p>Real-time image processing pipeline with custom auth, file uploads, and AI inference. Analysis completes in 2.5s for 1,000+ users. Deployed on HuggingFace Spaces with AWS S3 storage.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://huggingface.co/spaces/srujansri1/skintel-ai" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>DNA Cryptography</h3>
+                        <div class="project-tech">React · FastAPI · Docker · WebSocket · Vercel</div>
+                        <p>Full-stack cryptographic system processing 10MB+ datasets with sub-second encryption. Docker CI/CD handles 500+ concurrent requests at 99.8% uptime.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Backend Content -->
+        <!-- ══ BACKEND ═════════════════════════════════════ -->
         <div class="role-content" data-content="backend">
             <h2 class="section-title">Backend Engineering</h2>
+
+            <!-- Experience -->
+            <div class="experience-section">
+                <div class="exp-grid">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <div class="exp-role">AI Research Intern</div>
+                                <div class="exp-company">SISA Information Security Pvt. Ltd. · Bengaluru</div>
+                            </div>
+                            <div class="exp-date">Apr 2026 – Present</div>
+                        </div>
+                        <ul>
+                            <li>Engineered multi-stage scan pipelines via FastAPI integrating manifest discovery, OSV vulnerability scanning, registry enrichment, and CycloneDX/SPDX SBOM generation — cutting manual audit effort by 60%.</li>
+                            <li>Automated dependency enrichment workflows consuming public package registries and OSV advisory feeds, surfacing CVEs with EPSS-scored remediation metadata.</li>
+                        </ul>
+                    </div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <div class="exp-role">Machine Learning Intern</div>
+                                <div class="exp-company">Evtaar Technologies · Bengaluru</div>
+                            </div>
+                            <div class="exp-date">Aug 2025 – Nov 2025</div>
+                        </div>
+                        <ul>
+                            <li>Optimized LLM request handling and API orchestration, reducing average response latency by 25%.</li>
+                            <li>Established real-time communication between LLM backend and React frontend; deployed monitoring and backup in production.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
             <div class="stats-grid">
+                <div class="stat-card"><span class="stat-number">60%</span><span class="stat-label">Audit Effort Saved</span></div>
                 <div class="stat-card"><span class="stat-number">25%</span><span class="stat-label">Latency Reduction</span></div>
-                <div class="stat-card"><span class="stat-number">500+</span><span class="stat-label">Daily Requests</span></div>
                 <div class="stat-card"><span class="stat-number">99.5%</span><span class="stat-label">Production Uptime</span></div>
                 <div class="stat-card"><span class="stat-number">O(1)</span><span class="stat-label">Optimized Operations</span></div>
             </div>
+
+            <!-- Skills -->
             <div class="skills-grid">
-                <div class="skill-card"><h3>Python & FastAPI</h3><p>High-performance async APIs with Pydantic validation and auto-documentation</p></div>
+                <div class="skill-card"><h3>Python & FastAPI</h3><p>High-performance async APIs with Pydantic validation, thread-pool execution for CPU-bound tasks</p></div>
                 <div class="skill-card"><h3>Database Design</h3><p>PostgreSQL, MySQL schema design, indexing, and query optimization</p></div>
-                <div class="skill-card"><h3>Cloud Deployment</h3><p>Docker containerization, AWS, GCP, Vercel, Render deployment, and scalable infrastructure</p></div>
-                <div class="skill-card"><h3>API Integration</h3><p>REST APIs, WebSocket protocols, and third-party service integration</p></div>
+                <div class="skill-card"><h3>Security Pipelines</h3><p>OSV scanning, CycloneDX/SPDX SBOM, AIBOM generation, CVE enrichment workflows</p></div>
+                <div class="skill-card"><h3>Cloud & DevOps</h3><p>Docker, AWS, GCP, Oracle Cloud Infrastructure, CI/CD, Vercel, Render</p></div>
+                <div class="skill-card"><h3>API Integration</h3><p>REST, WebSocket, Groq API, public package registries, advisory feeds</p></div>
+                <div class="skill-card"><h3>Media Processing</h3><p>FFmpeg video/audio pipelines, Playwright browser automation, BeautifulSoup scraping</p></div>
             </div>
+
+            <!-- Projects -->
             <div class="projects-grid">
                 <div class="project-card">
-                    <div class="project-header"><h3>LLM API Orchestration</h3><div class="project-tech">Python • REST APIs • Async Processing</div><p>Optimized LLM request handling reducing response latency by 25%. Built automated workflows integrating external knowledge APIs.</p></div>
-                    <div class="project-footer"><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>AdCraft AI — Video Pipeline</h3>
+                        <div class="project-tech">FastAPI · FFmpeg · httpx · BeautifulSoup · Playwright · OCI</div>
+                        <p>Async FastAPI backend with thread-pool execution for CPU-bound FFmpeg video composition. Multi-strategy scraper upgrades from fast HTTP to full browser rendering based on completeness scoring. Kokoro TTS + royalty-free audio mixed via FFmpeg. Deployed on Oracle Cloud.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://adcraft-ai-xbog.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-header"><h3>Real-time Data Pipeline</h3><div class="project-tech">Django • PostgreSQL • WebSocket</div><p>Backend architecture for Skintel AI handling 500+ daily analysis requests. Implemented secure image storage with AWS S3 integration.</p></div>
-                    <div class="project-footer"><a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a></div>
+                    <div class="project-header">
+                        <h3>MORPHEUS — AI Security Scanner</h3>
+                        <div class="project-tech">FastAPI · Python · Docker · LangChain · Groq API</div>
+                        <p>Backend security scanner with parallel processing (90% cache hit), Docker sandbox execution for adversarial testing, and LLM-powered remediation report generation in sub-30-second scans.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-header"><h3>Encryption Backend</h3><div class="project-tech">FastAPI • Docker • CI/CD</div><p>Production-grade cryptographic system with 256-bit security. CI/CD pipeline handling 500+ concurrent requests at 99.8% uptime.</p></div>
-                    <div class="project-footer"><a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a></div>
+                    <div class="project-header">
+                        <h3>SISA PRISM — SBOM Pipeline</h3>
+                        <div class="project-tech">FastAPI · Python · OSV · CycloneDX · SPDX</div>
+                        <p>Production multi-stage scan pipeline for enterprise AI asset scanning. Integrates manifest discovery, registry enrichment, and standards-compliant SBOM generation, reducing manual audit effort by 60%.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Skintel AI — Data Pipeline</h3>
+                        <div class="project-tech">Django · PostgreSQL · AWS S3 · Docker</div>
+                        <p>Backend handling 500+ daily image analysis requests with secure AWS S3 storage, custom auth, and 99.5% production uptime across a full Django REST stack.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>DNA Cryptography Backend</h3>
+                        <div class="project-tech">FastAPI · Docker · CI/CD · WebSocket</div>
+                        <p>High-throughput cryptographic API processing 10MB+ datasets with sub-second encryption. CI/CD pipeline handles 500+ concurrent requests at 99.8% uptime with Docker orchestration.</p>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Contact Section -->
+        <!-- ══ CONTACT ═════════════════════════════════════ -->
         <section class="contact-section">
             <h2 class="section-title">Let's Build Something</h2>
-            <p class="hero-tagline">Open to opportunities in AI/ML, Full-Stack Development, and Technical Roles</p>
+            <p style="color:var(--text-secondary);font-size:1.1rem;margin-bottom:.5rem;">Open to opportunities in AI/ML, Full-Stack Development, and Technical Roles</p>
             <div class="contact-links">
                 <a href="mailto:srujansrnvs@gmail.com" class="contact-link">Email</a>
                 <a href="https://github.com/srujan186" class="contact-link" target="_blank">GitHub</a>
                 <a href="https://www.linkedin.com/in/srujan-srinivas-3541b1286/" class="contact-link" target="_blank">LinkedIn</a>
                 <a href="tel:+917204970239" class="contact-link">Call</a>
-                <a href="https://drive.google.com/file/d/136krgdKircI-Gx8oYv9SIuJddYN9oK6O/view?usp=sharing" class="contact-link resume-link" target="_blank">📄 Resume</a>
+                <a href="https://drive.google.com/file/d/1hWhZRGYb2JbUEy8KgXTO8mKDpfrVDEiB/view?usp=sharing" class="contact-link resume-link" target="_blank">📄 Resume</a>
             </div>
         </section>
     </div>
@@ -218,109 +531,70 @@
     </footer>
 
     <script>
-        const roleButtons = document.querySelectorAll('.role-btn');
+        // ── Role Switcher ──────────────────────────────────────────────
+        const roleColors = { aiml:'#00ff88', fullstack:'#0088ff', backend:'#ff0088' };
+        const roleButtons  = document.querySelectorAll('.role-btn');
         const roleContents = document.querySelectorAll('.role-content');
         const root = document.documentElement;
-        const roleColors = { 'aiml': '#00ff88', 'fullstack': '#0088ff', 'backend': '#ff0088' };
 
-        roleButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const role = button.dataset.role;
-                roleButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                roleContents.forEach(content => {
-                    content.classList.remove('active');
-                    if (content.dataset.content === role) content.classList.add('active');
-                });
-                root.style.setProperty('--current-accent', roleColors[role]);
-            });
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.skill-card, .project-card, .stat-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-
-        const customCursor = document.querySelector('.custom-cursor');
-        const cursorDot = document.querySelector('.cursor-dot');
-        const orbs = document.querySelectorAll('.cursor-orb');
-        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, dotX = 0, dotY = 0;
-        let orb1X = 0, orb1Y = 0, orb2X = 0, orb2Y = 0, orb3X = 0, orb3Y = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; mouseY = e.clientY;
-            createTrailParticle(mouseX, mouseY);
-        });
-
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.15; cursorY += (mouseY - cursorY) * 0.15;
-            dotX += (mouseX - dotX) * 0.3; dotY += (mouseY - dotY) * 0.3;
-            orb1X += (mouseX - orb1X) * 0.05; orb1Y += (mouseY - orb1Y) * 0.05;
-            orb2X += (mouseX - orb2X) * 0.08; orb2Y += (mouseY - orb2Y) * 0.08;
-            orb3X += (mouseX - orb3X) * 0.12; orb3Y += (mouseY - orb3Y) * 0.12;
-            customCursor.style.left = cursorX + 'px'; customCursor.style.top = cursorY + 'px';
-            cursorDot.style.left = dotX + 'px'; cursorDot.style.top = dotY + 'px';
-            if (orbs[0]) { orbs[0].style.left = orb1X + 'px'; orbs[0].style.top = orb1Y + 'px'; }
-            if (orbs[1]) { orbs[1].style.left = orb2X + 'px'; orbs[1].style.top = orb2Y + 'px'; }
-            if (orbs[2]) { orbs[2].style.left = orb3X + 'px'; orbs[2].style.top = orb3Y + 'px'; }
-            requestAnimationFrame(animateCursor);
+        function switchRole(role) {
+            roleButtons.forEach(b => b.classList.toggle('active', b.dataset.role === role));
+            roleContents.forEach(c => c.classList.toggle('active', c.dataset.content === role));
+            if (roleColors[role]) root.style.setProperty('--current-accent', roleColors[role]);
         }
-        animateCursor();
+        roleButtons.forEach(b => b.addEventListener('click', () => switchRole(b.dataset.role)));
 
-        let lastTrailTime = 0;
-        function createTrailParticle(x, y) {
-            const now = Date.now();
-            if (now - lastTrailTime < 30) return;
-            lastTrailTime = now;
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.style.left = x + 'px'; trail.style.top = y + 'px';
-            document.body.appendChild(trail);
-            setTimeout(() => trail.remove(), 800);
-        }
+        // ── Scroll Reveal ──────────────────────────────────────────────
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0) translateX(0)'; revealObserver.unobserve(e.target); }
+            });
+        }, { threshold:.1, rootMargin:'0px 0px -50px 0px' });
 
-        document.addEventListener('click', (e) => {
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            ripple.style.left = (e.clientX - 50) + 'px'; ripple.style.top = (e.clientY - 50) + 'px';
-            document.body.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
+        document.querySelectorAll('.skill-card,.project-card,.stat-card,.exp-card,.hackathon-card').forEach(card => {
+            card.style.opacity='0'; card.style.transform='translateY(20px)'; card.style.transition='opacity .6s ease,transform .6s ease';
+            revealObserver.observe(card);
         });
 
-        document.querySelectorAll('a, button, .project-card, .skill-card').forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                customCursor.style.transform = 'scale(1.5)'; customCursor.style.borderWidth = '3px';
-                cursorDot.style.transform = 'scale(1.5)';
-            });
-            element.addEventListener('mouseleave', () => {
-                customCursor.style.transform = 'scale(1)'; customCursor.style.borderWidth = '2px';
-                cursorDot.style.transform = 'scale(1)';
-            });
+        // ── Custom Cursor ──────────────────────────────────────────────
+        const cursor = document.querySelector('.custom-cursor');
+        const dot    = document.querySelector('.cursor-dot');
+        const orbs   = document.querySelectorAll('.cursor-orb');
+        let mx=0,my=0, cx=0,cy=0, dx=0,dy=0;
+        let o1x=0,o1y=0, o2x=0,o2y=0, o3x=0,o3y=0, lastTrail=0;
+
+        document.addEventListener('mousemove', e => {
+            mx=e.clientX; my=e.clientY;
+            const now=Date.now();
+            if(now-lastTrail>30){ lastTrail=now; const t=document.createElement('div'); t.className='cursor-trail'; t.style.left=mx+'px'; t.style.top=my+'px'; document.body.appendChild(t); setTimeout(()=>t.remove(),800); }
         });
 
-        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-            customCursor.style.display = 'none'; cursorDot.style.display = 'none';
-            orbs.forEach(orb => orb.style.display = 'none');
-            document.body.style.cursor = 'auto';
+        document.addEventListener('click', e => {
+            const r=document.createElement('div'); r.className='ripple'; r.style.left=(e.clientX-50)+'px'; r.style.top=(e.clientY-50)+'px'; document.body.appendChild(r); setTimeout(()=>r.remove(),600);
+        });
+
+        (function loop(){
+            cx+=(mx-cx)*.15; cy+=(my-cy)*.15;
+            dx+=(mx-dx)*.3;  dy+=(my-dy)*.3;
+            o1x+=(mx-o1x)*.05; o1y+=(my-o1y)*.05;
+            o2x+=(mx-o2x)*.08; o2y+=(my-o2y)*.08;
+            o3x+=(mx-o3x)*.12; o3y+=(my-o3y)*.12;
+            cursor.style.left=cx+'px'; cursor.style.top=cy+'px';
+            dot.style.left=dx+'px';    dot.style.top=dy+'px';
+            if(orbs[0]){orbs[0].style.left=o1x+'px';orbs[0].style.top=o1y+'px';}
+            if(orbs[1]){orbs[1].style.left=o2x+'px';orbs[1].style.top=o2y+'px';}
+            if(orbs[2]){orbs[2].style.left=o3x+'px';orbs[2].style.top=o3y+'px';}
+            requestAnimationFrame(loop);
+        })();
+
+        document.querySelectorAll('a,button,.project-card,.skill-card,.exp-card').forEach(el => {
+            el.addEventListener('mouseenter', ()=>{ cursor.style.transform='scale(1.5)'; cursor.style.borderWidth='3px'; dot.style.transform='scale(1.5)'; });
+            el.addEventListener('mouseleave', ()=>{ cursor.style.transform='scale(1)'; cursor.style.borderWidth='2px'; dot.style.transform='scale(1)'; });
+        });
+
+        if('ontouchstart' in window||navigator.maxTouchPoints>0){
+            cursor.style.display='none'; dot.style.display='none';
+            orbs.forEach(o=>o.style.display='none'); document.body.style.cursor='auto';
         }
     </script>
 </body>
