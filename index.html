@@ -1,601 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Srujan S — AI Engineer, Developer & Creator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg-primary: #0a0a0a; --bg-secondary: #111111;
-            --text-primary: #ffffff; --text-secondary: #a0a0a0;
-            --accent-aiml: #00ff88; --accent-fullstack: #0088ff;
-            --accent-backend: #ff0088;
-            --current-accent: var(--accent-aiml);
-        }
-        body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; line-height: 1.6; cursor: none; }
-
-        /* ── Cursor ── */
-        .custom-cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform .15s ease, border-width .15s ease; mix-blend-mode: difference; }
-        .cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9999; }
-        .cursor-trail { position: fixed; width: 8px; height: 8px; background: var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9998; opacity: 0; animation: trailFade .8s ease-out forwards; }
-        @keyframes trailFade { 0%{opacity:.8;transform:scale(1)} 100%{opacity:0;transform:scale(.3)} }
-        .ripple { position: fixed; border: 2px solid var(--current-accent); border-radius: 50%; pointer-events: none; z-index: 9997; animation: rippleExpand .6s ease-out forwards; }
-        @keyframes rippleExpand { 0%{width:0;height:0;opacity:1} 100%{width:100px;height:100px;opacity:0} }
-        .cursor-orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 1; opacity: .15; filter: blur(20px); background: var(--current-accent); transition: background .3s; }
-        .orb-1{width:60px;height:60px} .orb-2{width:40px;height:40px} .orb-3{width:30px;height:30px}
-
-        /* ── BG ── */
-        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size: 50px 50px; z-index: 0; opacity: .3; pointer-events: none; }
-        .noise { position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: .05; z-index: 0; pointer-events: none; }
-
-        /* ── Layout ── */
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
-
-        /* ── Hero ── */
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 4rem 0; }
-        .hero-name { font-family: 'Archivo Black', sans-serif; font-size: clamp(3rem,12vw,8rem); line-height: .9; margin-bottom: 1rem; letter-spacing: -.03em; background: linear-gradient(135deg,var(--text-primary) 0%,var(--current-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: fadeInUp .8s ease-out; }
-        .hero-tagline { font-size: clamp(1.2rem,3vw,2rem); color: var(--text-secondary); margin-bottom: 2rem; font-weight: 400; animation: fadeInUp .8s ease-out .2s both; }
-        .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 3rem; animation: fadeInUp .8s ease-out .3s both; }
-        .hero-badge { background: var(--bg-secondary); border: 1px solid rgba(255,255,255,.1); color: var(--text-secondary); padding: .35rem .9rem; font-size: .85rem; font-weight: 500; }
-        .hero-badge span { color: var(--current-accent); }
-
-        /* ── Role Switcher ── */
-        .role-switcher { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; animation: fadeInUp .8s ease-out .4s both; }
-        .role-btn { background: var(--bg-secondary); border: 2px solid rgba(255,255,255,.1); color: var(--text-primary); padding: 1rem 2rem; font-size: 1rem; font-weight: 600; cursor: pointer; position: relative; overflow: hidden; font-family: 'DM Sans',sans-serif; text-transform: uppercase; letter-spacing: .05em; transition: border-color .3s,color .3s,transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s; }
-        .role-btn::before { content:''; position:absolute; inset:0; background:var(--current-accent); transform:translateX(-100%); transition:transform .3s cubic-bezier(.4,0,.2,1); z-index:0; }
-        .role-btn:hover::before,.role-btn.active::before { transform:translateX(0); }
-        .role-btn span { position:relative; z-index:1; }
-        .role-btn:hover,.role-btn.active { border-color:var(--current-accent); color:var(--bg-primary); transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.3); }
-
-        /* ── Role Panels ── */
-        .role-content { display:none; animation:fadeIn .5s ease-out; }
-        .role-content.active { display:block; }
-        .section-title { font-family:'Archivo Black',sans-serif; font-size:clamp(2rem,5vw,3.5rem); margin-bottom:2rem; color:var(--current-accent); letter-spacing:-.02em; }
-
-        /* ── Experience Section ── */
-        .experience-section { margin-bottom: 4rem; }
-        .exp-grid { display: flex; flex-direction: column; gap: 1.5rem; }
-        .exp-card { background: var(--bg-secondary); border: 1px solid rgba(255,255,255,.1); padding: 2rem; position: relative; overflow: hidden; transition: border-color .3s,transform .3s,box-shadow .3s; }
-        .exp-card::before { content:''; position:absolute; left:0; top:0; width:4px; height:100%; background:var(--current-accent); }
-        .exp-card:hover { border-color:var(--current-accent); transform:translateX(4px); box-shadow:0 10px 40px rgba(0,0,0,.3); }
-        .exp-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
-        .exp-role { font-size:1.2rem; font-weight:700; color:var(--text-primary); }
-        .exp-company { color:var(--current-accent); font-weight:600; font-size:.95rem; margin-top:.2rem; }
-        .exp-date { color:var(--text-secondary); font-size:.85rem; white-space:nowrap; background:rgba(255,255,255,.05); padding:.25rem .75rem; }
-        .exp-card ul { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
-        .exp-card ul li { color:var(--text-secondary); font-size:.92rem; padding-left:1.2rem; position:relative; }
-        .exp-card ul li::before { content:'→'; position:absolute; left:0; color:var(--current-accent); font-size:.8rem; top:.1rem; }
-
-        /* ── Stats ── */
-        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:2rem; margin:4rem 0; }
-        .stat-card { text-align:center; padding:2rem; background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); }
-        .stat-number { font-family:'Archivo Black',sans-serif; font-size:3rem; color:var(--current-accent); display:block; margin-bottom:.5rem; }
-        .stat-label { color:var(--text-secondary); font-size:.85rem; text-transform:uppercase; letter-spacing:.1em; }
-
-        /* ── Skills ── */
-        .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; margin-bottom:4rem; }
-        .skill-card { background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); padding:1.5rem; position:relative; overflow:hidden; transition:border-color .3s,transform .3s,box-shadow .3s; }
-        .skill-card:hover { border-color:var(--current-accent); transform:translateY(-5px); box-shadow:0 10px 40px rgba(0,0,0,.3); }
-        .skill-card::after,.project-card::after { content:''; position:absolute; top:50%;left:50%; width:0;height:0; border-radius:50%; background:radial-gradient(circle,var(--current-accent) 0%,transparent 70%); opacity:0; transform:translate(-50%,-50%); transition:width .4s,height .4s,opacity .4s; pointer-events:none; }
-        .skill-card:hover::after,.project-card:hover::after { width:300px;height:300px;opacity:.1; }
-        .skill-card h3 { color:var(--current-accent); margin-bottom:.5rem; font-size:1.1rem; font-weight:700; }
-        .skill-card p { color:var(--text-secondary); font-size:.9rem; }
-
-        /* ── Projects ── */
-        .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:2rem; margin-bottom:4rem; }
-        .project-card { background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); overflow:hidden; position:relative; transition:border-color .3s,transform .3s,box-shadow .3s; }
-        .project-card::before { content:''; position:absolute; top:0;left:0; width:100%;height:4px; background:var(--current-accent); transform:scaleX(0); transform-origin:left; transition:transform .3s; z-index:1; }
-        .project-card:hover::before { transform:scaleX(1); }
-        .project-card:hover { border-color:var(--current-accent); transform:translateY(-5px); box-shadow:0 15px 50px rgba(0,0,0,.4); }
-        .project-header { padding:2rem; border-bottom:1px solid rgba(255,255,255,.05); }
-        .project-card h3 { font-size:1.4rem; margin-bottom:.4rem; color:var(--text-primary); font-weight:700; }
-        .project-tech { color:var(--current-accent); font-size:.82rem; font-weight:500; margin-bottom:.8rem; }
-        .project-card p { color:var(--text-secondary); font-size:.92rem; line-height:1.6; }
-        .project-footer { padding:1.25rem 2rem; display:flex; gap:1rem; flex-wrap:wrap; }
-        .project-link { padding:.55rem 1.1rem; background:transparent; border:1px solid var(--current-accent); color:var(--current-accent); text-decoration:none; font-size:.88rem; font-weight:600; transition:background .3s,color .3s; display:inline-block; }
-        .project-link:hover { background:var(--current-accent); color:var(--bg-primary); }
-
-        /* ── Hackathons ── */
-        .hackathon-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-bottom:4rem; }
-        .hackathon-card { background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); padding:1.5rem; position:relative; overflow:hidden; transition:border-color .3s,transform .3s; }
-        .hackathon-card:hover { border-color:var(--current-accent); transform:translateY(-4px); }
-        .hackathon-card .badge { display:inline-block; background:var(--current-accent); color:var(--bg-primary); font-size:.75rem; font-weight:700; padding:.2rem .6rem; margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.05em; }
-        .hackathon-card h3 { color:var(--text-primary); font-size:1.05rem; font-weight:700; margin-bottom:.3rem; }
-        .hackathon-card .org { color:var(--current-accent); font-size:.85rem; margin-bottom:.5rem; }
-        .hackathon-card p { color:var(--text-secondary); font-size:.88rem; }
-
-        /* ── Contact ── */
-        .contact-section { margin:6rem 0; text-align:center; }
-        .contact-links { display:flex; justify-content:center; flex-wrap:wrap; gap:1.5rem; margin-top:2rem; }
-        .contact-link { color:var(--text-primary); text-decoration:none; font-size:1rem; padding:.9rem 1.8rem; border:2px solid var(--current-accent); font-weight:600; transition:background .3s,color .3s,transform .3s,box-shadow .3s; }
-        .contact-link:hover { background:var(--current-accent); color:var(--bg-primary); transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.3); }
-        .resume-link { position:relative; overflow:hidden; }
-        .resume-link::after { content:''; position:absolute; inset:0; background:var(--current-accent); opacity:.08; animation:pulse 2s ease-in-out infinite; pointer-events:none; }
-        @keyframes pulse { 0%,100%{opacity:.08} 50%{opacity:.18} }
-
-        /* ── Footer ── */
-        footer { padding:3rem 0; text-align:center; border-top:1px solid rgba(255,255,255,.1); margin-top:6rem; color:var(--text-secondary); }
-
-        /* ── Animations ── */
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
-
-        /* ── Responsive ── */
-        @media(max-width:768px) {
-            .container{padding:0 1.5rem;}
-            .projects-grid,.skills-grid,.hackathon-grid{grid-template-columns:1fr;}
-            .role-switcher{flex-direction:column;}
-            .role-btn{width:100%;}
-            .exp-header{flex-direction:column;}
-        }
-    </style>
-</head>
-<body>
-    <div class="custom-cursor"></div>
-    <div class="cursor-dot"></div>
-    <div class="cursor-orb orb-1"></div>
-    <div class="cursor-orb orb-2"></div>
-    <div class="cursor-orb orb-3"></div>
-    <div class="bg-grid"></div>
-    <div class="noise"></div>
-
-    <div class="container">
-
-        <!-- ══ HERO ══════════════════════════════════════ -->
-        <section class="hero">
-            <h1 class="hero-name">SRUJAN S</h1>
-            <p class="hero-tagline">Building intelligent systems. Crafting seamless experiences. Shipping at scale.</p>
-            <div class="hero-meta">
-                <div class="hero-badge">📍 Bengaluru, India</div>
-                <div class="hero-badge">🎓 B.E. CS — GAT &nbsp;<span>GPA 8.5</span></div>
-                <div class="hero-badge">💼 AI Research Intern — <span>SISA Information Security</span></div>
-                <div class="hero-badge">🛡️ Software Intern — <span>DRDO CASDIC</span></div>
-            </div>
-            <div class="role-switcher">
-                <button class="role-btn active" data-role="aiml"><span>🤖 AI/ML Engineer</span></button>
-                <button class="role-btn" data-role="fullstack"><span>🚀 Full-Stack Developer</span></button>
-                <button class="role-btn" data-role="backend"><span>⚙️ Backend Engineer</span></button>
-            </div>
-        </section>
-
-        <!-- ══ AI / ML ════════════════════════════════════ -->
-        <div class="role-content active" data-content="aiml">
-            <h2 class="section-title">AI & Machine Learning</h2>
-
-            <!-- Experience -->
-            <div class="experience-section">
-                <div class="exp-grid">
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div>
-                                <div class="exp-role">AI Research Intern</div>
-                                <div class="exp-company">SISA Information Security Pvt. Ltd. · Bengaluru</div>
-                            </div>
-                            <div class="exp-date">Apr 2026 – Present</div>
-                        </div>
-                        <ul>
-                            <li>Spearheaded AIBOM &amp; SBOM generation on SISA PRISM Discovery — a production AI asset scanning platform — enabling end-to-end visibility into AI model supply chains for enterprise clients.</li>
-                            <li>Engineered multi-stage scan pipelines via FastAPI integrating OSV vulnerability scanning, deps.dev/registry enrichment, and CycloneDX/SPDX-compliant SBOM generation, cutting manual audit effort by 60%.</li>
-                            <li>Automated dependency enrichment workflows consuming public registries and OSV advisory feeds, surfacing CVEs and EPSS-scored vulnerabilities with actionable remediation metadata.</li>
-                        </ul>
-                    </div>
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div>
-                                <div class="exp-role">Machine Learning Intern</div>
-                                <div class="exp-company">Evtaar Technologies · Bengaluru</div>
-                            </div>
-                            <div class="exp-date">Aug 2025 – Nov 2025</div>
-                        </div>
-                        <ul>
-                            <li>Implemented RAG with optimized prompt pipelines and document indexing, increasing AI chatbot response accuracy by 30%.</li>
-                            <li>Optimized LLM request handling and API orchestration, reducing average response latency by 25%.</li>
-                            <li>Integrated external medical/knowledge APIs, reducing manual support dependency by 40%.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card"><span class="stat-number">30%</span><span class="stat-label">Accuracy Improvement</span></div>
-                <div class="stat-card"><span class="stat-number">60%</span><span class="stat-label">Audit Effort Reduction</span></div>
-                <div class="stat-card"><span class="stat-number">94.3%</span><span class="stat-label">Diagnostic Accuracy</span></div>
-                <div class="stat-card"><span class="stat-number">95%</span><span class="stat-label">Vuln Detection Accuracy</span></div>
-            </div>
-
-            <!-- Skills -->
-            <div class="skills-grid">
-                <div class="skill-card"><h3>RAG Systems</h3><p>Retrieval Augmented Generation with optimized prompt pipelines for production chatbots</p></div>
-                <div class="skill-card"><h3>LLM Integration</h3><p>Groq, GPT-based models, LangChain, API orchestration, and real-time conversation systems</p></div>
-                <div class="skill-card"><h3>Computer Vision</h3><p>ResNet-50 CNN architectures for image classification and diagnostic systems</p></div>
-                <div class="skill-card"><h3>AI Security (AIBOM)</h3><p>AI/SBOM generation, OSV vulnerability scanning, CycloneDX/SPDX compliance, supply-chain security</p></div>
-                <div class="skill-card"><h3>NLP & Voice AI</h3><p>Text-to-Speech (Kokoro TTS), Speech-to-Text, multilingual language processing</p></div>
-                <div class="skill-card"><h3>Frameworks</h3><p>PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, LangChain, Prompt Engineering</p></div>
-            </div>
-
-            <!-- Projects -->
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>AdCraft AI</h3>
-                        <div class="project-tech">Groq Llama 3.3 70B · Kokoro TTS · Playwright · FFmpeg · FastAPI</div>
-                        <p>AI-powered video ad generator that transforms any business URL into a broadcast-ready video in under 30 seconds. Groq LLM generates ad scripts with headlines, CTAs and scene descriptions; Kokoro TTS synthesizes voiceover mixed with background music via FFmpeg. Zero paid video APIs.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://adcraft-ai-xbog.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>MORPHEUS — AI Security Scanner</h3>
-                        <div class="project-tech">Python · FastAPI · LangChain · Docker · Groq API · React</div>
-                        <p>Open-source AI agent supply-chain vulnerability scanner with 95% detection accuracy. Automated adversarial testing in Docker sandboxes with LLM-generated remediation reports in sub-30-second scans. Detected code injection, SSRF, and prompt injection. Led 5-person team.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Skintel AI</h3>
-                        <div class="project-tech">ResNet-50 · GPT · React · Django · Docker · AWS</div>
-                        <p>End-to-end AI dermatology platform combining CNN and LLM for skin type classification. Achieved 94.3% diagnostic accuracy across 12 skin conditions, processing 50K+ images for 1,000+ users at 99.5% uptime.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://huggingface.co/spaces/srujansri1/skintel-ai" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>RAG Chatbot (Evtaar)</h3>
-                        <div class="project-tech">RAG · Python · REST APIs · Prompt Engineering</div>
-                        <p>Production AI chatbot with optimized document indexing. Reduced response latency by 25% and manual support dependency by 40%. Real-time LLM backend integrated with React frontend.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>DNA Cryptography with LLM</h3>
-                        <div class="project-tech">GPT · Python · Bioinformatics · Encryption</div>
-                        <p>Production cryptographic system integrating DNA sequence encoding with GPT-based encryption. Achieved 256-bit security, 40% faster key generation vs. RSA, and 85% reduction in brute-force susceptibility.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hackathons -->
-            <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.5rem)">Hackathons</h2>
-            <div class="hackathon-grid">
-                <div class="hackathon-card">
-                    <div class="badge">🥇 1st Place</div>
-                    <h3>Code Breaker's Challenge (CBC)</h3>
-                    <div class="org">Global Academy of Technology · 2025</div>
-                    <p>Built a HuggingFace RAG medical chatbot; judges' top pick.</p>
-                </div>
-                <div class="hackathon-card">
-                    <div class="badge">Top Tier</div>
-                    <h3>Colossus 2.0 Hackathon</h3>
-                    <div class="org">Dr. AIT Technical Club · 2024</div>
-                    <p>Top-tier finish among 40+ teams; directed full architecture in a 24-hr build as team lead.</p>
-                </div>
-                <div class="hackathon-card">
-                    <div class="badge">Team Lead</div>
-                    <h3>Sandbox Hackathon</h3>
-                    <div class="org">Dayananda Sagar College · 2026</div>
-                    <p>Collaborated on rapid AI prototyping under competition constraints.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ══ FULL-STACK ══════════════════════════════════ -->
-        <div class="role-content" data-content="fullstack">
-            <h2 class="section-title">Full-Stack Development</h2>
-
-            <!-- Experience -->
-            <div class="experience-section">
-                <div class="exp-grid">
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div>
-                                <div class="exp-role">Software Intern</div>
-                                <div class="exp-company">DRDO CASDIC · Bengaluru</div>
-                            </div>
-                            <div class="exp-date">Jan 2026 – Present</div>
-                        </div>
-                        <ul>
-                            <li>Built radar visualization tool using HTML5 Canvas API with requestAnimationFrame(), achieving 60 FPS with polar-to-Cartesian coordinate transformations and gradient-based sweep animations.</li>
-                            <li>Engineered JavaScript data structure for threat configs enabling O(1) modifications with event-driven updates and automatic re-rendering via data-attribute binding.</li>
-                            <li>Developed modular panel system handling 16+ collapsible panels using trigonometric calculations aligned with aviation's ±180° standards.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card"><span class="stat-number">60 FPS</span><span class="stat-label">Radar Rendering</span></div>
-                <div class="stat-card"><span class="stat-number">1000+</span><span class="stat-label">Active Users</span></div>
-                <div class="stat-card"><span class="stat-number">99.8%</span><span class="stat-label">Uptime</span></div>
-                <div class="stat-card"><span class="stat-number">500+</span><span class="stat-label">Concurrent Requests</span></div>
-            </div>
-
-            <!-- Skills -->
-            <div class="skills-grid">
-                <div class="skill-card"><h3>React.js</h3><p>Modern frontend with hooks, state management, and real-time UI updates</p></div>
-                <div class="skill-card"><h3>Next.js</h3><p>Full-stack React framework with SSR, API routes, and Vercel deployment</p></div>
-                <div class="skill-card"><h3>Django & FastAPI</h3><p>RESTful APIs, WebSocket connections, and scalable backend architecture</p></div>
-                <div class="skill-card"><h3>Docker & CI/CD</h3><p>Containerization, deployment pipelines, and production orchestration</p></div>
-                <div class="skill-card"><h3>Cloud Services</h3><p>AWS (S3, Elastic Beanstalk), GCP, Oracle Cloud Infrastructure, Vercel</p></div>
-                <div class="skill-card"><h3>HTML5 Canvas</h3><p>60 FPS real-time graphics, coordinate transforms, animation loops</p></div>
-            </div>
-
-            <!-- Projects -->
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>AdCraft AI</h3>
-                        <div class="project-tech">Next.js · FastAPI · Playwright · Oracle Cloud · Vercel</div>
-                        <p>Full-stack AI product with a Next.js frontend and async FastAPI backend on Oracle Cloud Infrastructure. Scrapes any URL with intelligent HTTP→browser fallback, composes video from live screenshots, and streams results to the client in real time.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://adcraft-ai-xbog.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>EW Threat Visualization</h3>
-                        <div class="project-tech">HTML5 Canvas · JavaScript · Real-time Graphics · Vercel</div>
-                        <p>High-performance radar display at 60 FPS with polar-to-Cartesian transformations. Built for DRDO CASDIC with 16+ collapsible panels and O(1) threat config modifications. Deployed on Vercel.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://ew-threat-visualization.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>MORPHEUS — AI Security Scanner</h3>
-                        <div class="project-tech">React · FastAPI · Python · Docker · LangChain</div>
-                        <p>Full-stack security platform with React frontend and Python/FastAPI backend. Parallel processing with 90% cache hit rate. Led 5-person team building the full architecture.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Skintel AI Platform</h3>
-                        <div class="project-tech">React · Django REST · PostgreSQL · AWS · HuggingFace</div>
-                        <p>Real-time image processing pipeline with custom auth, file uploads, and AI inference. Analysis completes in 2.5s for 1,000+ users. Deployed on HuggingFace Spaces with AWS S3 storage.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://huggingface.co/spaces/srujansri1/skintel-ai" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>DNA Cryptography</h3>
-                        <div class="project-tech">React · FastAPI · Docker · WebSocket · Vercel</div>
-                        <p>Full-stack cryptographic system processing 10MB+ datasets with sub-second encryption. Docker CI/CD handles 500+ concurrent requests at 99.8% uptime.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ══ BACKEND ═════════════════════════════════════ -->
-        <div class="role-content" data-content="backend">
-            <h2 class="section-title">Backend Engineering</h2>
-
-            <!-- Experience -->
-            <div class="experience-section">
-                <div class="exp-grid">
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div>
-                                <div class="exp-role">AI Research Intern</div>
-                                <div class="exp-company">SISA Information Security Pvt. Ltd. · Bengaluru</div>
-                            </div>
-                            <div class="exp-date">Apr 2026 – Present</div>
-                        </div>
-                        <ul>
-                            <li>Engineered multi-stage scan pipelines via FastAPI integrating manifest discovery, OSV vulnerability scanning, registry enrichment, and CycloneDX/SPDX SBOM generation — cutting manual audit effort by 60%.</li>
-                            <li>Automated dependency enrichment workflows consuming public package registries and OSV advisory feeds, surfacing CVEs with EPSS-scored remediation metadata.</li>
-                        </ul>
-                    </div>
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div>
-                                <div class="exp-role">Machine Learning Intern</div>
-                                <div class="exp-company">Evtaar Technologies · Bengaluru</div>
-                            </div>
-                            <div class="exp-date">Aug 2025 – Nov 2025</div>
-                        </div>
-                        <ul>
-                            <li>Optimized LLM request handling and API orchestration, reducing average response latency by 25%.</li>
-                            <li>Established real-time communication between LLM backend and React frontend; deployed monitoring and backup in production.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card"><span class="stat-number">60%</span><span class="stat-label">Audit Effort Saved</span></div>
-                <div class="stat-card"><span class="stat-number">25%</span><span class="stat-label">Latency Reduction</span></div>
-                <div class="stat-card"><span class="stat-number">99.5%</span><span class="stat-label">Production Uptime</span></div>
-                <div class="stat-card"><span class="stat-number">O(1)</span><span class="stat-label">Optimized Operations</span></div>
-            </div>
-
-            <!-- Skills -->
-            <div class="skills-grid">
-                <div class="skill-card"><h3>Python & FastAPI</h3><p>High-performance async APIs with Pydantic validation, thread-pool execution for CPU-bound tasks</p></div>
-                <div class="skill-card"><h3>Database Design</h3><p>PostgreSQL, MySQL schema design, indexing, and query optimization</p></div>
-                <div class="skill-card"><h3>Security Pipelines</h3><p>OSV scanning, CycloneDX/SPDX SBOM, AIBOM generation, CVE enrichment workflows</p></div>
-                <div class="skill-card"><h3>Cloud & DevOps</h3><p>Docker, AWS, GCP, Oracle Cloud Infrastructure, CI/CD, Vercel, Render</p></div>
-                <div class="skill-card"><h3>API Integration</h3><p>REST, WebSocket, Groq API, public package registries, advisory feeds</p></div>
-                <div class="skill-card"><h3>Media Processing</h3><p>FFmpeg video/audio pipelines, Playwright browser automation, BeautifulSoup scraping</p></div>
-            </div>
-
-            <!-- Projects -->
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>AdCraft AI — Video Pipeline</h3>
-                        <div class="project-tech">FastAPI · FFmpeg · httpx · BeautifulSoup · Playwright · OCI</div>
-                        <p>Async FastAPI backend with thread-pool execution for CPU-bound FFmpeg video composition. Multi-strategy scraper upgrades from fast HTTP to full browser rendering based on completeness scoring. Kokoro TTS + royalty-free audio mixed via FFmpeg. Deployed on Oracle Cloud.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://adcraft-ai-xbog.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>MORPHEUS — AI Security Scanner</h3>
-                        <div class="project-tech">FastAPI · Python · Docker · LangChain · Groq API</div>
-                        <p>Backend security scanner with parallel processing (90% cache hit), Docker sandbox execution for adversarial testing, and LLM-powered remediation report generation in sub-30-second scans.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>SISA PRISM — SBOM Pipeline</h3>
-                        <div class="project-tech">FastAPI · Python · OSV · CycloneDX · SPDX</div>
-                        <p>Production multi-stage scan pipeline for enterprise AI asset scanning. Integrates manifest discovery, registry enrichment, and standards-compliant SBOM generation, reducing manual audit effort by 60%.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Skintel AI — Data Pipeline</h3>
-                        <div class="project-tech">Django · PostgreSQL · AWS S3 · Docker</div>
-                        <p>Backend handling 500+ daily image analysis requests with secure AWS S3 storage, custom auth, and 99.5% production uptime across a full Django REST stack.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://github.com/srujan186" class="project-link" target="_blank">GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>DNA Cryptography Backend</h3>
-                        <div class="project-tech">FastAPI · Docker · CI/CD · WebSocket</div>
-                        <p>High-throughput cryptographic API processing 10MB+ datasets with sub-second encryption. CI/CD pipeline handles 500+ concurrent requests at 99.8% uptime with Docker orchestration.</p>
-                    </div>
-                    <div class="project-footer">
-                        <a href="https://dna-cryptography-using-llm.vercel.app/" class="project-link" target="_blank">Live Demo →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ══ CONTACT ═════════════════════════════════════ -->
-        <section class="contact-section">
-            <h2 class="section-title">Let's Build Something</h2>
-            <p style="color:var(--text-secondary);font-size:1.1rem;margin-bottom:.5rem;">Open to opportunities in AI/ML, Full-Stack Development, and Technical Roles</p>
-            <div class="contact-links">
-                <a href="mailto:srujansrnvs@gmail.com" class="contact-link">Email</a>
-                <a href="https://github.com/srujan186" class="contact-link" target="_blank">GitHub</a>
-                <a href="https://www.linkedin.com/in/srujan-srinivas-3541b1286/" class="contact-link" target="_blank">LinkedIn</a>
-                <a href="tel:+917204970239" class="contact-link">Call</a>
-                <a href="https://drive.google.com/file/d/1qlhcYHaLflYWFon-wAEdI2ojP1_5Eti_/view?usp=sharing" class="contact-link resume-link" target="_blank">📄 Resume</a>
-            </div>
-        </section>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Srujan S — AI Engineer & Developer</title><meta name="description" content="Srujan S is an AI engineer and full-stack developer in Bengaluru, building intelligent systems, security tools, and useful digital experiences.">
+<meta name="theme-color" content="#f7f9fc"><meta property="og:title" content="Srujan S — AI Engineer & Developer"><meta property="og:description" content="Intelligent systems. Thoughtful engineering. Explore Srujan’s work in AI, full-stack development, and backend engineering."><meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;450;500;550;600;650;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head>
+<body><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header glass"><a class="brand" href="#home" aria-label="Srujan home"><span class="brand-mark">s.</span><span>Srujan</span></a><nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#experience">Experience</a></nav><a class="nav-contact" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a></header>
+<main id="main"><section class="hero wrap" id="home"><div class="hero-main"><div class="hero-copy"><p class="role-line">AI engineer & full-stack developer</p><h1>Srujan S<span>.</span></h1><p class="hero-description">Turning complex ideas into<br class="desktop-break"> intelligent experiences.</p><p class="hero-note">From AI models to the interfaces around them.<br>Built with curiosity. Shipped with care.</p><div class="hero-actions"><a class="button button-dark" href="#work">Explore my work <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="resume-link" href="https://drive.google.com/file/d/1qlhcYHaLflYWFon-wAEdI2ojP1_5Eti_/view?usp=sharing" target="_blank" rel="noopener noreferrer">View résumé <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+<div class="hero-art"><img class="hero-sculpture" src="assets/glass-brain.png" alt="Translucent liquid-glass brain with sparse neural connections" width="1254" height="1254" fetchpriority="high"><div class="floating-note glass"><span class="spark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 3v26M3 16h26M7 7l18 18M7 25 25 7"/></svg></span><div><strong>Intelligence, connected.</strong><span>AI · Machine learning</span></div></div></div></div>
+<div class="hero-meta"><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>Bengaluru, India</span><span>Currently at <strong>SISA Information Security</strong></span><a href="#contact"><i class="status-dot" aria-hidden="true"></i>Open to opportunities</a></div>
+</section>
+<section class="work-section wrap" id="work"><div class="section-heading reveal"><h2>Selected work<span>.</span></h2><p>From the first experiment<br>to the production pipeline.</p></div>
+<div class="work-toolbar reveal"><div class="filters glass" role="group" aria-label="Filter work by discipline"><button id="filter-aiml" data-filter="aiml" aria-pressed="true" aria-controls="panel-aiml">AI & machine learning</button><button id="filter-fullstack" data-filter="fullstack" aria-pressed="false" aria-controls="panel-fullstack">Full-stack</button><button id="filter-backend" data-filter="backend" aria-pressed="false" aria-controls="panel-backend">Backend</button></div><span class="work-count" aria-live="polite">5 projects · AI & machine learning</span></div>
+<div class="role-panel" id="panel-aiml" data-role="aiml" aria-labelledby="filter-aiml">
+      <h3 class="no-js-title">AI &amp; Machine Learning</h3>
+      <div class="project-explorer"><div class="project-list"><details class="project" data-image="adcraft.png" data-name="AdCraft AI" data-category="Generative video" open>
+          <summary><span>AdCraft AI</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>An AI video generator that turns a business URL into a finished ad. An LLM writes the script, Kokoro synthesizes the voiceover, and FFmpeg brings the video, music, and narration together.</p><div class="tags"><span>Groq Llama 3.3 70B</span><span>Kokoro TTS</span><span>Playwright</span><span>FFmpeg</span><span>FastAPI</span></div><div class="project-links"><a href="https://adcraft-ai-xbog.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="security.svg" data-name="Morpheus" data-category="AI supply-chain security" >
+          <summary><span>Morpheus</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Open-source AI agent supply-chain vulnerability scanner with 95% detection accuracy. Automated adversarial testing in Docker sandboxes with LLM-generated remediation reports in sub-30-second scans. Detected code injection, SSRF, and prompt injection. Led 5-person team.</p><div class="tags"><span>Python</span><span>FastAPI</span><span>LangChain</span><span>Docker</span><span>Groq API</span><span>React</span></div><div class="project-links"><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="skintel.png" data-name="Skintel AI" data-category="Computer vision" >
+          <summary><span>Skintel AI</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>End-to-end AI dermatology platform combining CNN and LLM for skin type classification. Achieved 94.3% diagnostic accuracy across 12 skin conditions, processing 50K+ images for 1,000+ users at 99.5% uptime.</p><div class="tags"><span>ResNet-50</span><span>GPT</span><span>React</span><span>Django</span><span>Docker</span><span>AWS</span></div><div class="project-links"><a href="https://huggingface.co/spaces/srujansri1/skintel-ai" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="rag.svg" data-name="RAG Chatbot" data-category="Retrieval-augmented generation" >
+          <summary><span>RAG Chatbot</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Production AI chatbot with optimized document indexing. Reduced response latency by 25% and manual support dependency by 40%. Real-time LLM backend integrated with React frontend.</p><div class="tags"><span>RAG</span><span>Python</span><span>REST APIs</span><span>Prompt Engineering</span></div><div class="project-links"><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="dna.png" data-name="DNA Cryptography" data-category="Applied cryptography" >
+          <summary><span>DNA Cryptography</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Production cryptographic system integrating DNA sequence encoding with GPT-based encryption. Achieved 256-bit security, 40% faster key generation vs. RSA, and 85% reduction in brute-force susceptibility.</p><div class="tags"><span>GPT</span><span>Python</span><span>Bioinformatics</span><span>Encryption</span></div><div class="project-links"><a href="https://dna-cryptography-using-llm.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details></div>
+      <figure class="project-preview glass"><div class="preview-top"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="preview-kind">Project preview</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></div><div class="preview-image"><img src="assets/adcraft.png" width="1280" height="720" loading="lazy" alt="AdCraft AI website preview"></div><figcaption><div><strong class="preview-name">AdCraft AI</strong><span class="preview-category">Generative video</span></div><a class="preview-link circle-link" href="https://adcraft-ai-xbog.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open AdCraft AI"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></figcaption></figure></div>
+      <details class="skills-details"><summary>Explore the toolkit <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></summary><div class="skills-grid"><div><h4>RAG Systems</h4><p>Retrieval Augmented Generation with optimized prompt pipelines for production chatbots</p></div><div><h4>LLM Integration</h4><p>Groq, GPT-based models, LangChain, API orchestration, and real-time conversation systems</p></div><div><h4>Computer Vision</h4><p>ResNet-50 CNN architectures for image classification and diagnostic systems</p></div><div><h4>AI Security (AIBOM)</h4><p>AI/SBOM generation, OSV vulnerability scanning, CycloneDX/SPDX compliance, supply-chain security</p></div><div><h4>NLP &amp; Voice AI</h4><p>Text-to-Speech (Kokoro TTS), Speech-to-Text, multilingual language processing</p></div><div><h4>Frameworks</h4><p>PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, LangChain, Prompt Engineering</p></div></div></details>
+    </div><div class="role-panel" id="panel-fullstack" data-role="fullstack" aria-labelledby="filter-fullstack">
+      <h3 class="no-js-title">Full-Stack Development</h3>
+      <div class="project-explorer"><div class="project-list"><details class="project" data-image="adcraft.png" data-name="AdCraft AI" data-category="Generative video" open>
+          <summary><span>AdCraft AI</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Full-stack AI product with a Next.js frontend and async FastAPI backend on Oracle Cloud Infrastructure. Scrapes any URL with intelligent HTTP→browser fallback, composes video from live screenshots, and streams results to the client in real time.</p><div class="tags"><span>Next.js</span><span>FastAPI</span><span>Playwright</span><span>Oracle Cloud</span><span>Vercel</span></div><div class="project-links"><a href="https://adcraft-ai-xbog.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="radar.png" data-name="EW Visualization" data-category="Real-time graphics" >
+          <summary><span>EW Visualization</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>High-performance radar display at 60 FPS with polar-to-Cartesian transformations. Built for DRDO CASDIC with 16+ collapsible panels and O(1) threat config modifications. Deployed on Vercel.</p><div class="tags"><span>HTML5 Canvas</span><span>JavaScript</span><span>Real-time Graphics</span><span>Vercel</span></div><div class="project-links"><a href="https://ew-threat-visualization.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="security.svg" data-name="Morpheus" data-category="AI supply-chain security" >
+          <summary><span>Morpheus</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Full-stack security platform with React frontend and Python/FastAPI backend. Parallel processing with 90% cache hit rate. Led 5-person team building the full architecture.</p><div class="tags"><span>React</span><span>FastAPI</span><span>Python</span><span>Docker</span><span>LangChain</span></div><div class="project-links"><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="skintel.png" data-name="Skintel AI" data-category="Computer vision" >
+          <summary><span>Skintel AI</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Real-time image processing pipeline with custom auth, file uploads, and AI inference. Analysis completes in 2.5s for 1,000+ users. Deployed on HuggingFace Spaces with AWS S3 storage.</p><div class="tags"><span>React</span><span>Django REST</span><span>PostgreSQL</span><span>AWS</span><span>HuggingFace</span></div><div class="project-links"><a href="https://huggingface.co/spaces/srujansri1/skintel-ai" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="dna.png" data-name="DNA Cryptography" data-category="Applied cryptography" >
+          <summary><span>DNA Cryptography</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Full-stack cryptographic system processing 10MB+ datasets with sub-second encryption. Docker CI/CD handles 500+ concurrent requests at 99.8% uptime.</p><div class="tags"><span>React</span><span>FastAPI</span><span>Docker</span><span>WebSocket</span><span>Vercel</span></div><div class="project-links"><a href="https://dna-cryptography-using-llm.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details></div>
+      <figure class="project-preview glass"><div class="preview-top"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="preview-kind">Project preview</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></div><div class="preview-image"><img src="assets/adcraft.png" width="1280" height="720" loading="lazy" alt="AdCraft AI website preview"></div><figcaption><div><strong class="preview-name">AdCraft AI</strong><span class="preview-category">Generative video</span></div><a class="preview-link circle-link" href="https://adcraft-ai-xbog.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open AdCraft AI"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></figcaption></figure></div>
+      <details class="skills-details"><summary>Explore the toolkit <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></summary><div class="skills-grid"><div><h4>React.js</h4><p>Modern frontend with hooks, state management, and real-time UI updates</p></div><div><h4>Next.js</h4><p>Full-stack React framework with SSR, API routes, and Vercel deployment</p></div><div><h4>Django &amp; FastAPI</h4><p>RESTful APIs, WebSocket connections, and scalable backend architecture</p></div><div><h4>Docker &amp; CI/CD</h4><p>Containerization, deployment pipelines, and production orchestration</p></div><div><h4>Cloud Services</h4><p>AWS (S3, Elastic Beanstalk), GCP, Oracle Cloud Infrastructure, Vercel</p></div><div><h4>HTML5 Canvas</h4><p>60 FPS real-time graphics, coordinate transforms, animation loops</p></div></div></details>
+    </div><div class="role-panel" id="panel-backend" data-role="backend" aria-labelledby="filter-backend">
+      <h3 class="no-js-title">Backend Engineering</h3>
+      <div class="project-explorer"><div class="project-list"><details class="project" data-image="adcraft.png" data-name="AdCraft AI" data-category="Generative video" open>
+          <summary><span>AdCraft AI</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Async FastAPI backend with thread-pool execution for CPU-bound FFmpeg video composition. Multi-strategy scraper upgrades from fast HTTP to full browser rendering based on completeness scoring. Kokoro TTS + royalty-free audio mixed via FFmpeg. Deployed on Oracle Cloud.</p><div class="tags"><span>FastAPI</span><span>FFmpeg</span><span>httpx</span><span>BeautifulSoup</span><span>Playwright</span><span>OCI</span></div><div class="project-links"><a href="https://adcraft-ai-xbog.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="security.svg" data-name="Morpheus" data-category="AI supply-chain security" >
+          <summary><span>Morpheus</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Backend security scanner with parallel processing (90% cache hit), Docker sandbox execution for adversarial testing, and LLM-powered remediation report generation in sub-30-second scans.</p><div class="tags"><span>FastAPI</span><span>Python</span><span>Docker</span><span>LangChain</span><span>Groq API</span></div><div class="project-links"><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="pipeline.svg" data-name="SISA PRISM" data-category="Software supply-chain security" >
+          <summary><span>SISA PRISM</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Production multi-stage scan pipeline for enterprise AI asset scanning. Integrates manifest discovery, registry enrichment, and standards-compliant SBOM generation, reducing manual audit effort by 60%.</p><div class="tags"><span>FastAPI</span><span>Python</span><span>OSV</span><span>CycloneDX</span><span>SPDX</span></div><div class="project-links"><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="skintel.png" data-name="Skintel AI" data-category="Computer vision" >
+          <summary><span>Skintel AI</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>Backend handling 500+ daily image analysis requests with secure AWS S3 storage, custom auth, and 99.5% production uptime across a full Django REST stack.</p><div class="tags"><span>Django</span><span>PostgreSQL</span><span>AWS S3</span><span>Docker</span></div><div class="project-links"><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details><details class="project" data-image="dna.png" data-name="DNA Cryptography" data-category="Applied cryptography" >
+          <summary><span>DNA Cryptography</span><span class="expand" aria-hidden="true"></span></summary>
+          <div class="project-details"><p>High-throughput cryptographic API processing 10MB+ datasets with sub-second encryption. CI/CD pipeline handles 500+ concurrent requests at 99.8% uptime with Docker orchestration.</p><div class="tags"><span>FastAPI</span><span>Docker</span><span>CI/CD</span><span>WebSocket</span></div><div class="project-links"><a href="https://dna-cryptography-using-llm.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div>
+        </details></div>
+      <figure class="project-preview glass"><div class="preview-top"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="preview-kind">Project preview</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></div><div class="preview-image"><img src="assets/adcraft.png" width="1280" height="720" loading="lazy" alt="AdCraft AI website preview"></div><figcaption><div><strong class="preview-name">AdCraft AI</strong><span class="preview-category">Generative video</span></div><a class="preview-link circle-link" href="https://adcraft-ai-xbog.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open AdCraft AI"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></figcaption></figure></div>
+      <details class="skills-details"><summary>Explore the toolkit <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></summary><div class="skills-grid"><div><h4>Python &amp; FastAPI</h4><p>High-performance async APIs with Pydantic validation, thread-pool execution for CPU-bound tasks</p></div><div><h4>Database Design</h4><p>PostgreSQL, MySQL schema design, indexing, and query optimization</p></div><div><h4>Security Pipelines</h4><p>OSV scanning, CycloneDX/SPDX SBOM, AIBOM generation, CVE enrichment workflows</p></div><div><h4>Cloud &amp; DevOps</h4><p>Docker, AWS, GCP, Oracle Cloud Infrastructure, CI/CD, Vercel, Render</p></div><div><h4>API Integration</h4><p>REST, WebSocket, Groq API, public package registries, advisory feeds</p></div><div><h4>Media Processing</h4><p>FFmpeg video/audio pipelines, Playwright browser automation, BeautifulSoup scraping</p></div></div></details>
     </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Srujan S. Built with code, coffee, and curiosity.</p>
-        </div>
-    </footer>
-
-    <script>
-        // ── Role Switcher ──────────────────────────────────────────────
-        const roleColors = { aiml:'#00ff88', fullstack:'#0088ff', backend:'#ff0088' };
-        const roleButtons  = document.querySelectorAll('.role-btn');
-        const roleContents = document.querySelectorAll('.role-content');
-        const root = document.documentElement;
-
-        function switchRole(role) {
-            roleButtons.forEach(b => b.classList.toggle('active', b.dataset.role === role));
-            roleContents.forEach(c => c.classList.toggle('active', c.dataset.content === role));
-            if (roleColors[role]) root.style.setProperty('--current-accent', roleColors[role]);
-        }
-        roleButtons.forEach(b => b.addEventListener('click', () => switchRole(b.dataset.role)));
-
-        // ── Scroll Reveal ──────────────────────────────────────────────
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0) translateX(0)'; revealObserver.unobserve(e.target); }
-            });
-        }, { threshold:.1, rootMargin:'0px 0px -50px 0px' });
-
-        document.querySelectorAll('.skill-card,.project-card,.stat-card,.exp-card,.hackathon-card').forEach(card => {
-            card.style.opacity='0'; card.style.transform='translateY(20px)'; card.style.transition='opacity .6s ease,transform .6s ease';
-            revealObserver.observe(card);
-        });
-
-        // ── Custom Cursor ──────────────────────────────────────────────
-        const cursor = document.querySelector('.custom-cursor');
-        const dot    = document.querySelector('.cursor-dot');
-        const orbs   = document.querySelectorAll('.cursor-orb');
-        let mx=0,my=0, cx=0,cy=0, dx=0,dy=0;
-        let o1x=0,o1y=0, o2x=0,o2y=0, o3x=0,o3y=0, lastTrail=0;
-
-        document.addEventListener('mousemove', e => {
-            mx=e.clientX; my=e.clientY;
-            const now=Date.now();
-            if(now-lastTrail>30){ lastTrail=now; const t=document.createElement('div'); t.className='cursor-trail'; t.style.left=mx+'px'; t.style.top=my+'px'; document.body.appendChild(t); setTimeout(()=>t.remove(),800); }
-        });
-
-        document.addEventListener('click', e => {
-            const r=document.createElement('div'); r.className='ripple'; r.style.left=(e.clientX-50)+'px'; r.style.top=(e.clientY-50)+'px'; document.body.appendChild(r); setTimeout(()=>r.remove(),600);
-        });
-
-        (function loop(){
-            cx+=(mx-cx)*.15; cy+=(my-cy)*.15;
-            dx+=(mx-dx)*.3;  dy+=(my-dy)*.3;
-            o1x+=(mx-o1x)*.05; o1y+=(my-o1y)*.05;
-            o2x+=(mx-o2x)*.08; o2y+=(my-o2y)*.08;
-            o3x+=(mx-o3x)*.12; o3y+=(my-o3y)*.12;
-            cursor.style.left=cx+'px'; cursor.style.top=cy+'px';
-            dot.style.left=dx+'px';    dot.style.top=dy+'px';
-            if(orbs[0]){orbs[0].style.left=o1x+'px';orbs[0].style.top=o1y+'px';}
-            if(orbs[1]){orbs[1].style.left=o2x+'px';orbs[1].style.top=o2y+'px';}
-            if(orbs[2]){orbs[2].style.left=o3x+'px';orbs[2].style.top=o3y+'px';}
-            requestAnimationFrame(loop);
-        })();
-
-        document.querySelectorAll('a,button,.project-card,.skill-card,.exp-card').forEach(el => {
-            el.addEventListener('mouseenter', ()=>{ cursor.style.transform='scale(1.5)'; cursor.style.borderWidth='3px'; dot.style.transform='scale(1.5)'; });
-            el.addEventListener('mouseleave', ()=>{ cursor.style.transform='scale(1)'; cursor.style.borderWidth='2px'; dot.style.transform='scale(1)'; });
-        });
-
-        if('ontouchstart' in window||navigator.maxTouchPoints>0){
-            cursor.style.display='none'; dot.style.display='none';
-            orbs.forEach(o=>o.style.display='none'); document.body.style.cursor='auto';
-        }
-    </script>
-</body>
-</html>
+</section>
+<section class="about-section wrap" id="about"><div class="about-intro reveal"><h2>A builder,<br>by instinct<span>.</span></h2><div class="education glass"><span class="education-symbol" aria-hidden="true">⌘</span><div><strong>B.E. Computer Science</strong><p>Global Academy of Technology</p></div><span class="gpa">8.5<small>GPA</small></span></div></div><div class="about-copy reveal"><p class="lead">I’m Srujan, a developer based in Bengaluru, working at the intersection of <em>artificial intelligence</em> and <em>software engineering.</em></p><p>I build across the stack: training models, connecting APIs, and shaping the interfaces people use. My work spans AI supply-chain security, generative video, computer vision, and real-time visualization.</p><p>I’m drawn to complex problems and the thoughtful, useful systems that solve them.</p><a class="text-link" href="https://drive.google.com/file/d/1qlhcYHaLflYWFon-wAEdI2ojP1_5Eti_/view?usp=sharing" target="_blank" rel="noopener noreferrer">More about my background <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></section>
+<section class="experience-section wrap" id="experience"><div class="section-heading reveal"><h2>Learning by building<span>.</span></h2><p>Real systems.<br>Real-world experience.</p></div><div class="experience-list reveal"><details class="experience"><summary><span class="experience-company">SISA Information Security</span><span class="experience-role">AI Research Intern</span><span class="experience-date">Apr 2026 – Present</span><span class="expand" aria-hidden="true"></span></summary><ul><li>Spearheaded AIBOM &amp; SBOM generation on SISA PRISM Discovery — a production AI asset scanning platform — enabling end-to-end visibility into AI model supply chains for enterprise clients.</li><li>Engineered multi-stage scan pipelines via FastAPI integrating OSV vulnerability scanning, deps.dev/registry enrichment, and CycloneDX/SPDX-compliant SBOM generation, cutting manual audit effort by 60%.</li><li>Automated dependency enrichment workflows consuming public registries and OSV advisory feeds, surfacing CVEs and EPSS-scored vulnerabilities with actionable remediation metadata.</li></ul></details><details class="experience"><summary><span class="experience-company">DRDO CASDIC</span><span class="experience-role">Software Intern</span><span class="experience-date">Jan 2026 – Present</span><span class="expand" aria-hidden="true"></span></summary><ul><li>Built radar visualization tool using HTML5 Canvas API with requestAnimationFrame(), achieving 60 FPS with polar-to-Cartesian coordinate transformations and gradient-based sweep animations.</li><li>Engineered JavaScript data structure for threat configs enabling O(1) modifications with event-driven updates and automatic re-rendering via data-attribute binding.</li><li>Developed modular panel system handling 16+ collapsible panels using trigonometric calculations aligned with aviation&#x27;s ±180° standards.</li></ul></details><details class="experience"><summary><span class="experience-company">Evtaar Technologies</span><span class="experience-role">Machine Learning Intern</span><span class="experience-date">Aug 2025 – Nov 2025</span><span class="expand" aria-hidden="true"></span></summary><ul><li>Implemented RAG with optimized prompt pipelines and document indexing, increasing AI chatbot response accuracy by 30%.</li><li>Optimized LLM request handling and API orchestration, reducing average response latency by 25%.</li><li>Integrated external medical/knowledge APIs, reducing manual support dependency by 40%.</li></ul></details></div>
+<div class="recognition reveal"><h3>Built under pressure.</h3><div class="award"><span class="award-mark">1st</span><div><h4>Code Breaker’s Challenge</h4><p>Global Academy of Technology · 2025</p><p>A Hugging Face RAG medical chatbot. The judges’ top pick.</p></div></div><div class="award"><span class="award-mark">↗</span><div><h4>Colossus 2.0</h4><p>Dr. AIT Technical Club · 2024</p><p>Team lead. A top-tier finish among 40+ teams in a 24-hour build.</p></div></div><div class="award"><span class="award-mark">↗</span><div><h4>Sandbox Hackathon</h4><p>Dayananda Sagar College · 2026</p><p>Team lead. Rapid AI prototyping under competition constraints.</p></div></div></div></section>
+<section class="contact-section wrap" id="contact"><div class="contact-panel glass reveal"><div class="contact-top"><span><i class="status-dot" aria-hidden="true"></i>Open to what’s next</span><span>Bengaluru, India</span></div><h2>Let’s build<br>something good.</h2><div class="contact-bottom"><p>Have an idea, a role, or an interesting problem?<br>I’d love to hear about it.</p><a class="button button-dark" href="mailto:srujansrnvs@gmail.com">Get in touch <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><div class="email-line"><a href="mailto:srujansrnvs@gmail.com">srujansrnvs@gmail.com</a><button id="copy-email" aria-label="Copy email address">Copy email</button><span id="copy-status" role="status"></span></div></div></section></main>
+<footer class="wrap"><a class="brand" href="#home"><span class="brand-mark">s.</span><span>Srujan S</span></a><span class="copyright">© 2026 Srujan S</span><div class="social-links"><a href="https://github.com/srujan186" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://linkedin.com/in/srujan-srinivas-3541b1286/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="tel:+917204970239">Call ↗</a></div></footer>
+</body></html>

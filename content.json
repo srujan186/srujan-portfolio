@@ -1,0 +1,346 @@
+{
+  "aiml": {
+    "title": "AI & Machine Learning",
+    "projects": [
+      {
+        "title": "AdCraft AI",
+        "tech": "Groq Llama 3.3 70B · Kokoro TTS · Playwright · FFmpeg · FastAPI",
+        "description": "AI-powered video ad generator that transforms any business URL into a broadcast-ready video in under 30 seconds. Groq LLM generates ad scripts with headlines, CTAs and scene descriptions; Kokoro TTS synthesizes voiceover mixed with background music via FFmpeg. Zero paid video APIs.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://adcraft-ai-xbog.vercel.app/"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "MORPHEUS — AI Security Scanner",
+        "tech": "Python · FastAPI · LangChain · Docker · Groq API · React",
+        "description": "Open-source AI agent supply-chain vulnerability scanner with 95% detection accuracy. Automated adversarial testing in Docker sandboxes with LLM-generated remediation reports in sub-30-second scans. Detected code injection, SSRF, and prompt injection. Led 5-person team.",
+        "links": [
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "Skintel AI",
+        "tech": "ResNet-50 · GPT · React · Django · Docker · AWS",
+        "description": "End-to-end AI dermatology platform combining CNN and LLM for skin type classification. Achieved 94.3% diagnostic accuracy across 12 skin conditions, processing 50K+ images for 1,000+ users at 99.5% uptime.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://huggingface.co/spaces/srujansri1/skintel-ai"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "RAG Chatbot (Evtaar)",
+        "tech": "RAG · Python · REST APIs · Prompt Engineering",
+        "description": "Production AI chatbot with optimized document indexing. Reduced response latency by 25% and manual support dependency by 40%. Real-time LLM backend integrated with React frontend.",
+        "links": [
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "DNA Cryptography with LLM",
+        "tech": "GPT · Python · Bioinformatics · Encryption",
+        "description": "Production cryptographic system integrating DNA sequence encoding with GPT-based encryption. Achieved 256-bit security, 40% faster key generation vs. RSA, and 85% reduction in brute-force susceptibility.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://dna-cryptography-using-llm.vercel.app/"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      }
+    ],
+    "skills": [
+      {
+        "title": "RAG Systems",
+        "description": "Retrieval Augmented Generation with optimized prompt pipelines for production chatbots"
+      },
+      {
+        "title": "LLM Integration",
+        "description": "Groq, GPT-based models, LangChain, API orchestration, and real-time conversation systems"
+      },
+      {
+        "title": "Computer Vision",
+        "description": "ResNet-50 CNN architectures for image classification and diagnostic systems"
+      },
+      {
+        "title": "AI Security (AIBOM)",
+        "description": "AI/SBOM generation, OSV vulnerability scanning, CycloneDX/SPDX compliance, supply-chain security"
+      },
+      {
+        "title": "NLP & Voice AI",
+        "description": "Text-to-Speech (Kokoro TTS), Speech-to-Text, multilingual language processing"
+      },
+      {
+        "title": "Frameworks",
+        "description": "PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, LangChain, Prompt Engineering"
+      }
+    ],
+    "experience": [
+      {
+        "role": "AI Research Intern",
+        "company": "SISA Information Security Pvt. Ltd. · Bengaluru",
+        "date": "Apr 2026 – Present",
+        "details": [
+          "Spearheaded AIBOM & SBOM generation on SISA PRISM Discovery — a production AI asset scanning platform — enabling end-to-end visibility into AI model supply chains for enterprise clients.",
+          "Engineered multi-stage scan pipelines via FastAPI integrating OSV vulnerability scanning, deps.dev/registry enrichment, and CycloneDX/SPDX-compliant SBOM generation, cutting manual audit effort by 60%.",
+          "Automated dependency enrichment workflows consuming public registries and OSV advisory feeds, surfacing CVEs and EPSS-scored vulnerabilities with actionable remediation metadata."
+        ]
+      },
+      {
+        "role": "Machine Learning Intern",
+        "company": "Evtaar Technologies · Bengaluru",
+        "date": "Aug 2025 – Nov 2025",
+        "details": [
+          "Implemented RAG with optimized prompt pipelines and document indexing, increasing AI chatbot response accuracy by 30%.",
+          "Optimized LLM request handling and API orchestration, reducing average response latency by 25%.",
+          "Integrated external medical/knowledge APIs, reducing manual support dependency by 40%."
+        ]
+      }
+    ]
+  },
+  "fullstack": {
+    "title": "Full-Stack Development",
+    "projects": [
+      {
+        "title": "AdCraft AI",
+        "tech": "Next.js · FastAPI · Playwright · Oracle Cloud · Vercel",
+        "description": "Full-stack AI product with a Next.js frontend and async FastAPI backend on Oracle Cloud Infrastructure. Scrapes any URL with intelligent HTTP→browser fallback, composes video from live screenshots, and streams results to the client in real time.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://adcraft-ai-xbog.vercel.app/"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "EW Threat Visualization",
+        "tech": "HTML5 Canvas · JavaScript · Real-time Graphics · Vercel",
+        "description": "High-performance radar display at 60 FPS with polar-to-Cartesian transformations. Built for DRDO CASDIC with 16+ collapsible panels and O(1) threat config modifications. Deployed on Vercel.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://ew-threat-visualization.vercel.app/"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "MORPHEUS — AI Security Scanner",
+        "tech": "React · FastAPI · Python · Docker · LangChain",
+        "description": "Full-stack security platform with React frontend and Python/FastAPI backend. Parallel processing with 90% cache hit rate. Led 5-person team building the full architecture.",
+        "links": [
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "Skintel AI Platform",
+        "tech": "React · Django REST · PostgreSQL · AWS · HuggingFace",
+        "description": "Real-time image processing pipeline with custom auth, file uploads, and AI inference. Analysis completes in 2.5s for 1,000+ users. Deployed on HuggingFace Spaces with AWS S3 storage.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://huggingface.co/spaces/srujansri1/skintel-ai"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "DNA Cryptography",
+        "tech": "React · FastAPI · Docker · WebSocket · Vercel",
+        "description": "Full-stack cryptographic system processing 10MB+ datasets with sub-second encryption. Docker CI/CD handles 500+ concurrent requests at 99.8% uptime.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://dna-cryptography-using-llm.vercel.app/"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      }
+    ],
+    "skills": [
+      {
+        "title": "React.js",
+        "description": "Modern frontend with hooks, state management, and real-time UI updates"
+      },
+      {
+        "title": "Next.js",
+        "description": "Full-stack React framework with SSR, API routes, and Vercel deployment"
+      },
+      {
+        "title": "Django & FastAPI",
+        "description": "RESTful APIs, WebSocket connections, and scalable backend architecture"
+      },
+      {
+        "title": "Docker & CI/CD",
+        "description": "Containerization, deployment pipelines, and production orchestration"
+      },
+      {
+        "title": "Cloud Services",
+        "description": "AWS (S3, Elastic Beanstalk), GCP, Oracle Cloud Infrastructure, Vercel"
+      },
+      {
+        "title": "HTML5 Canvas",
+        "description": "60 FPS real-time graphics, coordinate transforms, animation loops"
+      }
+    ],
+    "experience": [
+      {
+        "role": "Software Intern",
+        "company": "DRDO CASDIC · Bengaluru",
+        "date": "Jan 2026 – Present",
+        "details": [
+          "Built radar visualization tool using HTML5 Canvas API with requestAnimationFrame(), achieving 60 FPS with polar-to-Cartesian coordinate transformations and gradient-based sweep animations.",
+          "Engineered JavaScript data structure for threat configs enabling O(1) modifications with event-driven updates and automatic re-rendering via data-attribute binding.",
+          "Developed modular panel system handling 16+ collapsible panels using trigonometric calculations aligned with aviation's ±180° standards."
+        ]
+      }
+    ]
+  },
+  "backend": {
+    "title": "Backend Engineering",
+    "projects": [
+      {
+        "title": "AdCraft AI — Video Pipeline",
+        "tech": "FastAPI · FFmpeg · httpx · BeautifulSoup · Playwright · OCI",
+        "description": "Async FastAPI backend with thread-pool execution for CPU-bound FFmpeg video composition. Multi-strategy scraper upgrades from fast HTTP to full browser rendering based on completeness scoring. Kokoro TTS + royalty-free audio mixed via FFmpeg. Deployed on Oracle Cloud.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://adcraft-ai-xbog.vercel.app/"
+          },
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "MORPHEUS — AI Security Scanner",
+        "tech": "FastAPI · Python · Docker · LangChain · Groq API",
+        "description": "Backend security scanner with parallel processing (90% cache hit), Docker sandbox execution for adversarial testing, and LLM-powered remediation report generation in sub-30-second scans.",
+        "links": [
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "SISA PRISM — SBOM Pipeline",
+        "tech": "FastAPI · Python · OSV · CycloneDX · SPDX",
+        "description": "Production multi-stage scan pipeline for enterprise AI asset scanning. Integrates manifest discovery, registry enrichment, and standards-compliant SBOM generation, reducing manual audit effort by 60%.",
+        "links": [
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "Skintel AI — Data Pipeline",
+        "tech": "Django · PostgreSQL · AWS S3 · Docker",
+        "description": "Backend handling 500+ daily image analysis requests with secure AWS S3 storage, custom auth, and 99.5% production uptime across a full Django REST stack.",
+        "links": [
+          {
+            "text": "GitHub",
+            "href": "https://github.com/srujan186"
+          }
+        ]
+      },
+      {
+        "title": "DNA Cryptography Backend",
+        "tech": "FastAPI · Docker · CI/CD · WebSocket",
+        "description": "High-throughput cryptographic API processing 10MB+ datasets with sub-second encryption. CI/CD pipeline handles 500+ concurrent requests at 99.8% uptime with Docker orchestration.",
+        "links": [
+          {
+            "text": "Live Demo",
+            "href": "https://dna-cryptography-using-llm.vercel.app/"
+          }
+        ]
+      }
+    ],
+    "skills": [
+      {
+        "title": "Python & FastAPI",
+        "description": "High-performance async APIs with Pydantic validation, thread-pool execution for CPU-bound tasks"
+      },
+      {
+        "title": "Database Design",
+        "description": "PostgreSQL, MySQL schema design, indexing, and query optimization"
+      },
+      {
+        "title": "Security Pipelines",
+        "description": "OSV scanning, CycloneDX/SPDX SBOM, AIBOM generation, CVE enrichment workflows"
+      },
+      {
+        "title": "Cloud & DevOps",
+        "description": "Docker, AWS, GCP, Oracle Cloud Infrastructure, CI/CD, Vercel, Render"
+      },
+      {
+        "title": "API Integration",
+        "description": "REST, WebSocket, Groq API, public package registries, advisory feeds"
+      },
+      {
+        "title": "Media Processing",
+        "description": "FFmpeg video/audio pipelines, Playwright browser automation, BeautifulSoup scraping"
+      }
+    ],
+    "experience": [
+      {
+        "role": "AI Research Intern",
+        "company": "SISA Information Security Pvt. Ltd. · Bengaluru",
+        "date": "Apr 2026 – Present",
+        "details": [
+          "Engineered multi-stage scan pipelines via FastAPI integrating manifest discovery, OSV vulnerability scanning, registry enrichment, and CycloneDX/SPDX SBOM generation — cutting manual audit effort by 60%.",
+          "Automated dependency enrichment workflows consuming public package registries and OSV advisory feeds, surfacing CVEs with EPSS-scored remediation metadata."
+        ]
+      },
+      {
+        "role": "Machine Learning Intern",
+        "company": "Evtaar Technologies · Bengaluru",
+        "date": "Aug 2025 – Nov 2025",
+        "details": [
+          "Optimized LLM request handling and API orchestration, reducing average response latency by 25%.",
+          "Established real-time communication between LLM backend and React frontend; deployed monitoring and backup in production."
+        ]
+      }
+    ]
+  }
+}
